@@ -2,20 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
+namespace IdentityServer4.Validation;
 
-namespace IdentityServer4.Validation
+/// <summary>
+/// Validates requested resources (scopes and resource indicators)
+/// </summary>
+public interface IResourceValidator
 {
-    /// <summary>
-    /// Validates requested resources (scopes and resource indicators)
-    /// </summary>
-    public interface IResourceValidator
-    {
-        // todo: should this be used anywhere we re-create tokens? do we need to re-run scope validation?
+    // todo: should this be used anywhere we re-create tokens? do we need to re-run scope validation?
 
-        /// <summary>
-        /// Validates the requested resources for the client.
-        /// </summary>
-        Task<ResourceValidationResult> ValidateRequestedResourcesAsync(ResourceValidationRequest request);
-    }
+    /// <summary>
+    /// Validates the requested resources for the client.
+    /// </summary>
+    Task<ResourceValidationResult> ValidateRequestedResourcesAsync(ResourceValidationRequest request);
 }
