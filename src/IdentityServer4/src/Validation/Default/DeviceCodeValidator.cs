@@ -19,7 +19,7 @@ internal class DeviceCodeValidator : IDeviceCodeValidator
     private readonly IDeviceFlowCodeService _devices;
     private readonly IProfileService _profile;
     private readonly IDeviceFlowThrottlingService _throttlingService;
-    private readonly ISystemClock _systemClock;
+    private readonly TimeProvider _systemClock;
     private readonly ILogger<DeviceCodeValidator> _logger;
 
     /// <summary>
@@ -34,7 +34,7 @@ internal class DeviceCodeValidator : IDeviceCodeValidator
         IDeviceFlowCodeService devices,
         IProfileService profile,
         IDeviceFlowThrottlingService throttlingService,
-        ISystemClock systemClock,
+        TimeProvider systemClock,
         ILogger<DeviceCodeValidator> logger)
     {
         _devices = devices;

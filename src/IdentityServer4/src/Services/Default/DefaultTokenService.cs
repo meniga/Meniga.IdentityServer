@@ -47,7 +47,7 @@ public class DefaultTokenService : ITokenService
     /// <summary>
     /// The clock
     /// </summary>
-    protected readonly ISystemClock Clock;
+    protected readonly TimeProvider Clock;
 
     /// <summary>
     /// The key material service
@@ -75,7 +75,7 @@ public class DefaultTokenService : ITokenService
         IReferenceTokenStore referenceTokenStore,
         ITokenCreationService creationService,
         IHttpContextAccessor contextAccessor,
-        ISystemClock clock,
+        TimeProvider clock,
         IKeyMaterialService keyMaterialService,
         IdentityServerOptions options,
         ILogger<DefaultTokenService> logger)
@@ -157,7 +157,7 @@ public class DefaultTokenService : ITokenService
 
         var token = new Token(OidcConstants.TokenTypes.IdentityToken)
         {
-            CreationTime = Clock.UtcNow.UtcDateTime,
+            CreationTime = Clock.GetUtcNow().UtcDateTime,
             Audiences = { request.ValidatedRequest.Client.ClientId },
             Issuer = issuer,
             Lifetime = request.ValidatedRequest.Client.IdentityTokenLifetime,
@@ -205,7 +205,7 @@ public class DefaultTokenService : ITokenService
         var issuer = ContextAccessor.HttpContext.GetIdentityServerIssuerUri();
         var token = new Token(OidcConstants.TokenTypes.AccessToken)
         {
-            CreationTime = Clock.UtcNow.UtcDateTime,
+            CreationTime = Clock.GetUtcNow().UtcDateTime,
             Issuer = issuer,
             Lifetime = request.ValidatedRequest.AccessTokenLifetime,
             Claims = claims.Distinct(new ClaimComparer()).ToList(),
