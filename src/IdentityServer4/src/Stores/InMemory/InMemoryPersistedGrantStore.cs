@@ -13,7 +13,7 @@ namespace IdentityServer4.Stores;
 /// </summary>
 public class InMemoryPersistedGrantStore : IPersistedGrantStore
 {
-    private readonly ConcurrentDictionary<string, PersistedGrant> _repository = new ConcurrentDictionary<string, PersistedGrant>();
+    private readonly ConcurrentDictionary<string, PersistedGrant> _repository = new();
 
     /// <inheritdoc/>
     public Task StoreAsync(PersistedGrant grant)
@@ -26,7 +26,7 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
     /// <inheritdoc/>
     public Task<PersistedGrant> GetAsync(string key)
     {
-        if (_repository.TryGetValue(key, out PersistedGrant token))
+        if (_repository.TryGetValue(key, out var token))
         {
             return Task.FromResult(token);
         }
@@ -73,19 +73,19 @@ public class InMemoryPersistedGrantStore : IPersistedGrantStore
             from item in _repository
             select item.Value;
 
-        if (!String.IsNullOrWhiteSpace(filter.ClientId))
+        if (!string.IsNullOrWhiteSpace(filter.ClientId))
         {
             query = query.Where(x => x.ClientId == filter.ClientId);
         }
-        if (!String.IsNullOrWhiteSpace(filter.SessionId))
+        if (!string.IsNullOrWhiteSpace(filter.SessionId))
         {
             query = query.Where(x => x.SessionId == filter.SessionId);
         }
-        if (!String.IsNullOrWhiteSpace(filter.SubjectId))
+        if (!string.IsNullOrWhiteSpace(filter.SubjectId))
         {
             query = query.Where(x => x.SubjectId == filter.SubjectId);
         }
-        if (!String.IsNullOrWhiteSpace(filter.Type))
+        if (!string.IsNullOrWhiteSpace(filter.Type))
         {
             query = query.Where(x => x.Type == filter.Type);
         }

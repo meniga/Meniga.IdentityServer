@@ -15,7 +15,7 @@ public static class ValidatedAuthorizeRequestExtensions
 {
     public static void RemovePrompt(this ValidatedAuthorizeRequest request)
     {
-        request.PromptModes = Enumerable.Empty<string>();
+        request.PromptModes = [];
         request.Raw.Remove(OidcConstants.AuthorizeRequest.Prompt);
     }
 
@@ -86,7 +86,7 @@ public static class ValidatedAuthorizeRequestExtensions
 
     public static void AddAcrValue(this ValidatedAuthorizeRequest request, string value)
     {
-        if (String.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
 
         request.AuthenticationContextReferenceClasses.Add(value);
         var acr_values = request.AuthenticationContextReferenceClasses.ToSpaceSeparatedString();

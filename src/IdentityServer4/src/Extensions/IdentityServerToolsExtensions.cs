@@ -25,7 +25,7 @@ public static class IdentityServerToolsExtensions
     /// <param name="audiences">The audiences.</param>
     /// <param name="additionalClaims">Additional claims</param>
     /// <returns></returns>
-    public static async Task<string> IssueClientJwtAsync(this IdentityServerTools tools,
+    public static Task<string> IssueClientJwtAsync(this IdentityServerTools tools,
         string clientId,
         int lifetime,
         IEnumerable<string> scopes = null,
@@ -67,6 +67,6 @@ public static class IdentityServerToolsExtensions
             }
         }
 
-        return await tools.IssueJwtAsync(lifetime, claims);
+        return tools.IssueJwtAsync(lifetime, claims);
     }
 }

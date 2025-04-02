@@ -35,9 +35,9 @@ public class DefaultRefreshTokenStore : DefaultGrantStore<RefreshToken>, IRefres
     /// </summary>
     /// <param name="refreshToken">The refresh token.</param>
     /// <returns></returns>
-    public async Task<string> StoreRefreshTokenAsync(RefreshToken refreshToken)
+    public Task<string> StoreRefreshTokenAsync(RefreshToken refreshToken)
     {
-        return await CreateItemAsync(refreshToken, refreshToken.ClientId, refreshToken.SubjectId, refreshToken.SessionId, refreshToken.Description, refreshToken.CreationTime, refreshToken.Lifetime);
+        return CreateItemAsync(refreshToken, refreshToken.ClientId, refreshToken.SubjectId, refreshToken.SessionId, refreshToken.Description, refreshToken.CreationTime, refreshToken.Lifetime);
     }
 
     /// <summary>

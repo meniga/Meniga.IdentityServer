@@ -81,19 +81,19 @@ public class AuthorizeResponseGenerator : IAuthorizeResponseGenerator
     /// <param name="request">The request.</param>
     /// <returns></returns>
     /// <exception cref="System.InvalidOperationException">invalid grant type: " + request.GrantType</exception>
-    public virtual async Task<AuthorizeResponse> CreateResponseAsync(ValidatedAuthorizeRequest request)
+    public virtual Task<AuthorizeResponse> CreateResponseAsync(ValidatedAuthorizeRequest request)
     {
         if (request.GrantType == GrantType.AuthorizationCode)
         {
-            return await CreateCodeFlowResponseAsync(request);
+            return CreateCodeFlowResponseAsync(request);
         }
         if (request.GrantType == GrantType.Implicit)
         {
-            return await CreateImplicitFlowResponseAsync(request);
+            return CreateImplicitFlowResponseAsync(request);
         }
         if (request.GrantType == GrantType.Hybrid)
         {
-            return await CreateHybridFlowResponseAsync(request);
+            return CreateHybridFlowResponseAsync(request);
         }
 
         Logger.LogError("Unsupported grant type: " + request.GrantType);
@@ -151,7 +151,7 @@ public class AuthorizeResponseGenerator : IAuthorizeResponseGenerator
         Logger.LogDebug("Creating Implicit Flow response.");
 
         string accessTokenValue = null;
-        int accessTokenLifetime = 0;
+        var accessTokenLifetime = 0;
 
         var responseTypes = request.ResponseType.FromSpaceSeparatedString();
 

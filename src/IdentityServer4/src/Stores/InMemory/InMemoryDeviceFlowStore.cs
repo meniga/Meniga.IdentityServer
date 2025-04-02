@@ -12,7 +12,7 @@ namespace IdentityServer4.Stores;
 /// <seealso cref="IdentityServer4.Stores.IDeviceFlowStore" />
 public class InMemoryDeviceFlowStore : IDeviceFlowStore
 {
-    private readonly List<InMemoryDeviceAuthorization> _repository = new List<InMemoryDeviceAuthorization>();
+    private readonly List<InMemoryDeviceAuthorization> _repository = [];
 
     /// <summary>
     /// Stores the device authorization request.

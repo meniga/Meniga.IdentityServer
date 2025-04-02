@@ -25,7 +25,7 @@ public class GrantValidationResult : ValidationResult
     /// <summary>
     /// Custom fields for the token response
     /// </summary>
-    public Dictionary<string, object> CustomResponse { get; set; } = new Dictionary<string, object>();
+    public Dictionary<string, object> CustomResponse { get; set; } = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GrantValidationResult"/> class with no subject.
@@ -109,10 +109,10 @@ public class GrantValidationResult : ValidationResult
 
         var resultClaims = new List<Claim>
         {
-            new Claim(JwtClaimTypes.Subject, subject),
-            new Claim(JwtClaimTypes.AuthenticationMethod, authenticationMethod),
-            new Claim(JwtClaimTypes.IdentityProvider, identityProvider),
-            new Claim(JwtClaimTypes.AuthenticationTime, new DateTimeOffset(authTime).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            new(JwtClaimTypes.Subject, subject),
+            new(JwtClaimTypes.AuthenticationMethod, authenticationMethod),
+            new(JwtClaimTypes.IdentityProvider, identityProvider),
+            new(JwtClaimTypes.AuthenticationTime, new DateTimeOffset(authTime).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
         };
 
         if (!claims.IsNullOrEmpty())

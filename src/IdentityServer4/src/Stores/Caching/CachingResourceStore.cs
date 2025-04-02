@@ -72,8 +72,7 @@ public class CachingResourceStore<T> : IResourceStore
         var key = AllKey;
 
         var all = await _allCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration,
-            async () => await _inner.GetAllResourcesAsync(),
+            _options.Caching.ResourceStoreExpiration, () => _inner.GetAllResourcesAsync(),
             _logger);
 
         return all;
@@ -85,8 +84,7 @@ public class CachingResourceStore<T> : IResourceStore
         var key = GetKey(apiResourceNames);
 
         var apis = await _apiResourceCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration,
-            async () => await _inner.FindApiResourcesByNameAsync(apiResourceNames),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindApiResourcesByNameAsync(apiResourceNames),
             _logger);
 
         return apis;
@@ -98,8 +96,7 @@ public class CachingResourceStore<T> : IResourceStore
         var key = GetKey(names);
 
         var identities = await _identityCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration,
-            async () => await _inner.FindIdentityResourcesByScopeNameAsync(names),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindIdentityResourcesByScopeNameAsync(names),
             _logger);
 
         return identities;
@@ -111,8 +108,7 @@ public class CachingResourceStore<T> : IResourceStore
         var key = GetKey(names);
 
         var apis = await _apiByScopeCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration,
-            async () => await _inner.FindApiResourcesByScopeNameAsync(names),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindApiResourcesByScopeNameAsync(names),
             _logger);
 
         return apis;
@@ -124,8 +120,7 @@ public class CachingResourceStore<T> : IResourceStore
         var key = GetKey(scopeNames);
 
         var apis = await _apiScopeCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration,
-            async () => await _inner.FindApiScopesByNameAsync(scopeNames),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindApiScopesByNameAsync(scopeNames),
             _logger);
 
         return apis;

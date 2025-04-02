@@ -75,7 +75,7 @@ public class AuthorizationRequest
     /// <value>
     /// The collection of prompt modes.
     /// </value>
-    public IEnumerable<string> PromptModes { get; set; } = Enumerable.Empty<string>();
+    public IEnumerable<string> PromptModes { get; set; } = [];
 
     /// <summary>
     /// The acr values passed from the authorization request.
@@ -104,7 +104,7 @@ public class AuthorizationRequest
     /// <value>
     /// The request object values
     /// </value>
-    public Dictionary<string, string> RequestObjectValues { get; } = new Dictionary<string, string>();
+    public Dictionary<string, string> RequestObjectValues { get; } = new();
 
 
     /// <summary>

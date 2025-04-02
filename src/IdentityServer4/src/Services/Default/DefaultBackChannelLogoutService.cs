@@ -84,7 +84,7 @@ public class DefaultBackChannelLogoutService : IBackChannelLogoutService
     /// <returns></returns>
     protected virtual Task SendLogoutNotificationsAsync(IEnumerable<BackChannelLogoutRequest> requests)
     {
-        requests = requests ?? Enumerable.Empty<BackChannelLogoutRequest>();
+        requests = requests ?? [];
         var tasks = requests.Select(SendLogoutNotificationAsync).ToArray();
         return Task.WhenAll(tasks);
     }
@@ -158,11 +158,11 @@ public class DefaultBackChannelLogoutService : IBackChannelLogoutService
 
         var claims = new List<Claim>
         {
-            new Claim(JwtClaimTypes.Subject, request.SubjectId),
-            new Claim(JwtClaimTypes.Audience, request.ClientId),
-            new Claim(JwtClaimTypes.IssuedAt, Clock.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
-            new Claim(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)),
-            new Claim(JwtClaimTypes.Events, json, IdentityServerConstants.ClaimValueTypes.Json)
+            new(JwtClaimTypes.Subject, request.SubjectId),
+            new(JwtClaimTypes.Audience, request.ClientId),
+            new(JwtClaimTypes.IssuedAt, Clock.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+            new(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)),
+            new(JwtClaimTypes.Events, json, IdentityServerConstants.ClaimValueTypes.Json)
         };
 
         if (request.SessionId != null)

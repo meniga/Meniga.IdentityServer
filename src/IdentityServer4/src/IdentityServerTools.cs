@@ -41,7 +41,7 @@ public class IdentityServerTools
     /// <param name="claims">The claims.</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException">claims</exception>
-    public virtual async Task<string> IssueJwtAsync(int lifetime, IEnumerable<Claim> claims)
+    public virtual Task<string> IssueJwtAsync(int lifetime, IEnumerable<Claim> claims)
     {
         if (claims == null) throw new ArgumentNullException(nameof(claims));
 
@@ -56,7 +56,7 @@ public class IdentityServerTools
             Claims = new HashSet<Claim>(claims, new ClaimComparer())
         };
 
-        return await _tokenCreation.CreateTokenAsync(token);
+        return _tokenCreation.CreateTokenAsync(token);
     }
 
     /// <summary>
@@ -67,9 +67,9 @@ public class IdentityServerTools
     /// <param name="claims">The claims.</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException">claims</exception>
-    public virtual async Task<string> IssueJwtAsync(int lifetime, string issuer, IEnumerable<Claim> claims)
+    public virtual Task<string> IssueJwtAsync(int lifetime, string issuer, IEnumerable<Claim> claims)
     {
-        if (String.IsNullOrWhiteSpace(issuer)) throw new ArgumentNullException(nameof(issuer));
+        if (string.IsNullOrWhiteSpace(issuer)) throw new ArgumentNullException(nameof(issuer));
         if (claims == null) throw new ArgumentNullException(nameof(claims));
 
         var token = new Token
@@ -81,6 +81,6 @@ public class IdentityServerTools
             Claims = new HashSet<Claim>(claims, new ClaimComparer())
         };
 
-        return await _tokenCreation.CreateTokenAsync(token);
+        return _tokenCreation.CreateTokenAsync(token);
     }
 }

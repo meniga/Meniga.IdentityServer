@@ -137,7 +137,7 @@ public class DefaultGrantStore<T>
     /// <param name="expiration">The expiration.</param>
     /// <param name="consumedTime">The consumed time.</param>
     /// <returns></returns>
-    protected virtual async Task StoreItemAsync(string key, T item, string clientId, string subjectId, string sessionId, string description, DateTime created, DateTime? expiration, DateTime? consumedTime = null)
+    protected virtual Task StoreItemAsync(string key, T item, string clientId, string subjectId, string sessionId, string description, DateTime created, DateTime? expiration, DateTime? consumedTime = null)
     {
         key = GetHashedKey(key);
 
@@ -157,7 +157,7 @@ public class DefaultGrantStore<T>
             Data = json
         };
 
-        await Store.StoreAsync(grant);
+        return Store.StoreAsync(grant);
     }
 
     /// <summary>
@@ -165,10 +165,10 @@ public class DefaultGrantStore<T>
     /// </summary>
     /// <param name="key">The key.</param>
     /// <returns></returns>
-    protected virtual async Task RemoveItemAsync(string key)
+    protected virtual Task RemoveItemAsync(string key)
     {
         key = GetHashedKey(key);
-        await Store.RemoveAsync(key);
+        return Store.RemoveAsync(key);
     }
 
     /// <summary>
@@ -177,9 +177,9 @@ public class DefaultGrantStore<T>
     /// <param name="subjectId">The subject identifier.</param>
     /// <param name="clientId">The client identifier.</param>
     /// <returns></returns>
-    protected virtual async Task RemoveAllAsync(string subjectId, string clientId)
+    protected virtual Task RemoveAllAsync(string subjectId, string clientId)
     {
-        await Store.RemoveAllAsync(new PersistedGrantFilter
+        return Store.RemoveAllAsync(new PersistedGrantFilter
         {
             SubjectId = subjectId,
             ClientId = clientId,

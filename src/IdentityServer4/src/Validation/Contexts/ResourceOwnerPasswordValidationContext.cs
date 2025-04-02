@@ -41,5 +41,5 @@ public class ResourceOwnerPasswordValidationContext
     /// <value>
     /// The result.
     /// </value>
-    public GrantValidationResult Result { get; set; } = new GrantValidationResult(TokenRequestErrors.InvalidGrant);
+    public GrantValidationResult Result { get; set; } = new(TokenRequestErrors.InvalidGrant);
 }

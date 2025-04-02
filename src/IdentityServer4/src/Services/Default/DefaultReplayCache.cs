@@ -21,14 +21,14 @@ public class DefaultReplayCache : IReplayCache
     }
         
     /// <inheritdoc />
-    public async Task AddAsync(string purpose, string handle, DateTimeOffset expiration)
+    public Task AddAsync(string purpose, string handle, DateTimeOffset expiration)
     {
         var options = new DistributedCacheEntryOptions
         {
             AbsoluteExpiration = expiration
         };
-            
-        await _cache.SetAsync(Prefix + purpose + handle, new byte[] { }, options);
+
+        return _cache.SetAsync(Prefix + purpose + handle, [], options);
     }
 
     /// <inheritdoc />

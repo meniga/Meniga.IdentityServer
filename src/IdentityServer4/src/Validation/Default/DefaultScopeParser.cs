@@ -116,11 +116,11 @@ public class DefaultScopeParser : IScopeParser
         /// <param name="parsedParameter"></param>
         public void SetParsedValues(string parsedName, string parsedParameter)
         {
-            if (String.IsNullOrWhiteSpace(parsedName))
+            if (string.IsNullOrWhiteSpace(parsedName))
             {
                 throw new ArgumentNullException(nameof(parsedName));
             }
-            if (String.IsNullOrWhiteSpace(parsedParameter))
+            if (string.IsNullOrWhiteSpace(parsedParameter))
             {
                 throw new ArgumentNullException(nameof(parsedParameter));
             }

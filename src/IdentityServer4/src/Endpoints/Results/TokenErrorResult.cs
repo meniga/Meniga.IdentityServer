@@ -21,7 +21,7 @@ internal class TokenErrorResult : IEndpointResult
         Response = error;
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         context.Response.StatusCode = 400;
         context.Response.SetNoCache();
@@ -34,7 +34,7 @@ internal class TokenErrorResult : IEndpointResult
             custom = Response.Custom
         };
 
-        await context.Response.WriteJsonAsync(dto);
+        return context.Response.WriteJsonAsync(dto);
     }
 
     internal class ResultDto

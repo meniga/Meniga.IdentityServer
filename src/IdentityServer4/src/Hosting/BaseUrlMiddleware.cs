@@ -21,12 +21,12 @@ public class BaseUrlMiddleware
         _options = options;
     }
 
-    public async Task Invoke(HttpContext context)
+    public Task Invoke(HttpContext context)
     {
         var request = context.Request;
             
         context.SetIdentityServerBasePath(request.PathBase.Value.RemoveTrailingSlash());
 
-        await _next(context);
+        return _next(context);
     }
 }

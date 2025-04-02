@@ -8,7 +8,7 @@ namespace IdentityServer4;
 
 internal static class ObjectSerializer
 {
-    private static readonly JsonSerializerOptions Options = new JsonSerializerOptions
+    private static readonly JsonSerializerOptions Options = new()
     {
         IgnoreNullValues = true
     };

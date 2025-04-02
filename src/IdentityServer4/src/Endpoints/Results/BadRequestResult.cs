@@ -19,7 +19,7 @@ internal class BadRequestResult : IEndpointResult
         ErrorDescription = errorDescription;
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         context.Response.StatusCode = 400;
         context.Response.SetNoCache();
@@ -32,8 +32,10 @@ internal class BadRequestResult : IEndpointResult
                 error_description = ErrorDescription
             };
 
-            await context.Response.WriteJsonAsync(dto);
+            return context.Response.WriteJsonAsync(dto);
         }
+
+        return Task.CompletedTask;
     }
 
     internal class ResultDto

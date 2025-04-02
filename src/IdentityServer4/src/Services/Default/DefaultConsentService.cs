@@ -148,7 +148,7 @@ public class DefaultConsentService : IConsentService
     /// or
     /// subject
     /// </exception>
-    public virtual async Task UpdateConsentAsync(ClaimsPrincipal subject, Client client, IEnumerable<ParsedScopeValue> parsedScopes)
+    public virtual Task UpdateConsentAsync(ClaimsPrincipal subject, Client client, IEnumerable<ParsedScopeValue> parsedScopes)
     {
         if (client == null) throw new ArgumentNullException(nameof(client));
         if (subject == null) throw new ArgumentNullException(nameof(subject));
@@ -176,14 +176,16 @@ public class DefaultConsentService : IConsentService
                     consent.Expiration = consent.CreationTime.AddSeconds(client.ConsentLifetime.Value);
                 }
 
-                await UserConsentStore.StoreUserConsentAsync(consent);
+                return UserConsentStore.StoreUserConsentAsync(consent);
             }
             else
             {
                 Logger.LogDebug("Client allows remembering consent, and no scopes provided. Removing consent from consent store for subject: {subject}", subject.GetSubjectId());
 
-                await UserConsentStore.RemoveUserConsentAsync(subjectId, clientId);
+                return UserConsentStore.RemoveUserConsentAsync(subjectId, clientId);
             }
         }
+
+        return Task.CompletedTask;
     }
 }

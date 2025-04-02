@@ -31,7 +31,7 @@ public class MutualTlsSecretParser : ISecretParser
     /// <summary>
     /// Name of authentication method (blank to suppress in discovery since we do special handling)
     /// </summary>
-    public string AuthenticationMethod => String.Empty;
+    public string AuthenticationMethod => string.Empty;
 
     /// <summary>
     /// Parses the HTTP context
@@ -55,7 +55,7 @@ public class MutualTlsSecretParser : ISecretParser
             var id = body["client_id"].FirstOrDefault();
 
             // client id must be present
-            if (!String.IsNullOrWhiteSpace(id))
+            if (!string.IsNullOrWhiteSpace(id))
             {
                 if (id.Length > _options.InputLengthRestrictions.ClientId)
                 {

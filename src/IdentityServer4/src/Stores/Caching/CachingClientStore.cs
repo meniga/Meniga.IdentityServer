@@ -48,8 +48,7 @@ public class CachingClientStore<T> : IClientStore
     public async Task<Client> FindClientByIdAsync(string clientId)
     {
         var client = await _cache.GetAsync(clientId,
-            _options.Caching.ClientStoreExpiration,
-            async () => await _inner.FindClientByIdAsync(clientId),
+            _options.Caching.ClientStoreExpiration, () => _inner.FindClientByIdAsync(clientId),
             _logger);
 
         return client;

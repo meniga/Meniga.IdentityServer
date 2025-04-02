@@ -53,21 +53,21 @@ internal class AuthorizeResult : IEndpointResult
         _clock = _clock ?? context.RequestServices.GetRequiredService<ISystemClock>();
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         Init(context);
 
         if (Response.IsError)
         {
-            await ProcessErrorAsync(context);
+            return ProcessErrorAsync(context);
         }
         else
         {
-            await ProcessResponseAsync(context);
+            return ProcessResponseAsync(context);
         }
     }
 
-    private async Task ProcessErrorAsync(HttpContext context)
+    private Task ProcessErrorAsync(HttpContext context)
     {
         // these are the conditions where we can send a response 
         // back directly to the client, otherwise we're only showing the error UI
@@ -81,12 +81,12 @@ internal class AuthorizeResult : IEndpointResult
         if (isSafeError)
         {
             // this scenario we can return back to the client
-            await ProcessResponseAsync(context);
+            return ProcessResponseAsync(context);
         }
         else
         {
             // we now know we must show error page
-            await RedirectToErrorPageAsync(context);
+            return RedirectToErrorPageAsync(context);
         }
     }
 
@@ -102,7 +102,7 @@ internal class AuthorizeResult : IEndpointResult
         await RenderAuthorizeResponseAsync(context);
     }
 
-    private async Task RenderAuthorizeResponseAsync(HttpContext context)
+    private Task RenderAuthorizeResponseAsync(HttpContext context)
     {
         if (Response.Request.ResponseMode == OidcConstants.ResponseModes.Query ||
             Response.Request.ResponseMode == OidcConstants.ResponseModes.Fragment)
@@ -114,13 +114,15 @@ internal class AuthorizeResult : IEndpointResult
         {
             context.Response.SetNoCache();
             AddSecurityHeaders(context);
-            await context.Response.WriteHtmlAsync(GetFormPostHtml());
+            return context.Response.WriteHtmlAsync(GetFormPostHtml());
         }
         else
         {
             //_logger.LogError("Unsupported response mode.");
             throw new InvalidOperationException("Unsupported response mode");
         }
+
+        return Task.CompletedTask;
     }
 
     private void AddSecurityHeaders(HttpContext context)

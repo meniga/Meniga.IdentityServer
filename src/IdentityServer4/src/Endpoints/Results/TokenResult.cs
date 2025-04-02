@@ -20,7 +20,7 @@ internal class TokenResult : IEndpointResult
         Response = response ?? throw new ArgumentNullException(nameof(response));
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         context.Response.SetNoCache();
 
@@ -36,7 +36,7 @@ internal class TokenResult : IEndpointResult
             Custom = Response.Custom
         };
 
-        await context.Response.WriteJsonAsync(dto);
+        return context.Response.WriteJsonAsync(dto);
     }
 
     internal class ResultDto

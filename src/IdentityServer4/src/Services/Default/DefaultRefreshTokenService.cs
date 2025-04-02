@@ -217,8 +217,8 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     {
         Logger.LogDebug("Updating refresh token");
 
-        bool needsCreate = false;
-        bool needsUpdate = false;
+        var needsCreate = false;
+        var needsUpdate = false;
 
         if (client.RefreshTokenUsage == TokenUsage.OneTimeOnly)
         {
