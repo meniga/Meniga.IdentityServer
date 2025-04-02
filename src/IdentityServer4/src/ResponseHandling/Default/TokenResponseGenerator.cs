@@ -52,7 +52,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
     /// <summary>
     ///  The clock
     /// </summary>
-    protected readonly ISystemClock Clock;
+    protected readonly TimeProvider Clock;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TokenResponseGenerator" /> class.
@@ -64,7 +64,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
     /// <param name="resources">The resources.</param>
     /// <param name="clients">The clients.</param>
     /// <param name="logger">The logger.</param>
-    public TokenResponseGenerator(ISystemClock clock, ITokenService tokenService, IRefreshTokenService refreshTokenService, IScopeParser scopeParser, IResourceStore resources, IClientStore clients, ILogger<TokenResponseGenerator> logger)
+    public TokenResponseGenerator(TimeProvider clock, ITokenService tokenService, IRefreshTokenService refreshTokenService, IScopeParser scopeParser, IResourceStore resources, IClientStore clients, ILogger<TokenResponseGenerator> logger)
     {
         Clock = clock;
         TokenService = tokenService;
@@ -224,7 +224,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
         }
         else
         {
-            oldAccessToken.CreationTime = Clock.UtcNow.UtcDateTime;
+            oldAccessToken.CreationTime = Clock.GetUtcNow().UtcDateTime;
             oldAccessToken.Lifetime = request.ValidatedRequest.AccessTokenLifetime;
 
             accessTokenString = await TokenService.CreateSecurityTokenAsync(oldAccessToken);

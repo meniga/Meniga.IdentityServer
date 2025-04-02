@@ -194,8 +194,8 @@ public static class HttpContextExtensions
 
         if (endSessionMsg != null)
         {
-            var clock = context.RequestServices.GetRequiredService<ISystemClock>();
-            var msg = new Message<LogoutNotificationContext>(endSessionMsg, clock.UtcNow.UtcDateTime);
+            var clock = context.RequestServices.GetRequiredService<TimeProvider>();
+            var msg = new Message<LogoutNotificationContext>(endSessionMsg, clock.GetUtcNow().UtcDateTime);
 
             var endSessionMessageStore = context.RequestServices.GetRequiredService<IMessageStore<LogoutNotificationContext>>();
             var id = await endSessionMessageStore.WriteAsync(msg);
