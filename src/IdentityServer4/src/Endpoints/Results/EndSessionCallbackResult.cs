@@ -37,7 +37,7 @@ internal class EndSessionCallbackResult : IEndpointResult
         _options = _options ?? context.RequestServices.GetRequiredService<IdentityServerOptions>();
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         Init(context);
 
@@ -51,8 +51,10 @@ internal class EndSessionCallbackResult : IEndpointResult
             AddCspHeaders(context);
 
             var html = GetHtml();
-            await context.Response.WriteHtmlAsync(html);
+            return context.Response.WriteHtmlAsync(html);
         }
+
+        return Task.CompletedTask;
     }
 
     private void AddCspHeaders(HttpContext context)

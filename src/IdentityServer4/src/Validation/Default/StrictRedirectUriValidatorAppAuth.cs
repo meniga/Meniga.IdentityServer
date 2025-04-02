@@ -96,7 +96,7 @@ public class StrictRedirectUriValidatorAppAuth : StrictRedirectUriValidator
         }
 
         string portAsString;
-        int indexOfPathSeparator = parts[2].IndexOfAny(new[] { '/', '?', '#' });
+        var indexOfPathSeparator = parts[2].IndexOfAny(['/', '?', '#']);
         if (indexOfPathSeparator > 0)
         {
             portAsString = parts[2].Substring(0, indexOfPathSeparator);

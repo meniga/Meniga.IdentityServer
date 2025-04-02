@@ -27,7 +27,7 @@ public static class IdentityServerBuilderExtensionsCrypto
     public static IIdentityServerBuilder AddSigningCredential(this IIdentityServerBuilder builder, SigningCredentials credential)
     {
         if (!(credential.Key is AsymmetricSecurityKey
-              || credential.Key is IdentityModel.Tokens.JsonWebKey && ((IdentityModel.Tokens.JsonWebKey)credential.Key).HasPrivateKey))
+              || credential.Key is JsonWebKey && ((JsonWebKey)credential.Key).HasPrivateKey))
         {
             throw new InvalidOperationException("Signing key is not asymmetric");
         }
@@ -42,7 +42,7 @@ public static class IdentityServerBuilderExtensionsCrypto
             throw new InvalidOperationException("Invalid curve for signing algorithm");
         }
 
-        if (credential.Key is IdentityModel.Tokens.JsonWebKey jsonWebKey)
+        if (credential.Key is JsonWebKey jsonWebKey)
         {
             if (jsonWebKey.Kty == JsonWebAlgorithmsKeyTypes.EllipticCurve && !CryptoHelper.IsValidCrvValueForAlgorithm(jsonWebKey.Crv))
                 throw new InvalidOperationException("Invalid crv value for signing algorithm");
@@ -56,7 +56,7 @@ public static class IdentityServerBuilderExtensionsCrypto
             SigningAlgorithm = credential.Algorithm
         };
 
-        builder.Services.AddSingleton<IValidationKeysStore>(new InMemoryValidationKeysStore(new[] { keyInfo }));
+        builder.Services.AddSingleton<IValidationKeysStore>(new InMemoryValidationKeysStore([keyInfo]));
 
         return builder;
     }

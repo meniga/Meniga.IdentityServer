@@ -17,9 +17,9 @@ internal class UserInfoResult : IEndpointResult
         Claims = claims;
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         context.Response.SetNoCache();
-        await context.Response.WriteJsonAsync(Claims);
+        return context.Response.WriteJsonAsync(Claims);
     }
 }

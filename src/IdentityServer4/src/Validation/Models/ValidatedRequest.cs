@@ -87,7 +87,7 @@ public class ValidatedRequest
     /// <value>
     /// The validated resources.
     /// </value>
-    public ResourceValidationResult ValidatedResources { get; set; } = new ResourceValidationResult();
+    public ResourceValidationResult ValidatedResources { get; set; } = new();
 
     /// <summary>
     /// Gets or sets the value of the confirmation method (will become the cnf claim). Must be a JSON object.

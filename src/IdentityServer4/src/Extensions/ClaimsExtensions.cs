@@ -51,7 +51,7 @@ internal static class ClaimsExtensions
         if (claim.ValueType == ClaimValueTypes.Integer ||
             claim.ValueType == ClaimValueTypes.Integer32)
         {
-            if (Int32.TryParse(claim.Value, out int value))
+            if (int.TryParse(claim.Value, out var value))
             {
                 return value;
             }
@@ -59,7 +59,7 @@ internal static class ClaimsExtensions
 
         if (claim.ValueType == ClaimValueTypes.Integer64)
         {
-            if (Int64.TryParse(claim.Value, out long value))
+            if (long.TryParse(claim.Value, out var value))
             {
                 return value;
             }
@@ -67,7 +67,7 @@ internal static class ClaimsExtensions
 
         if (claim.ValueType == ClaimValueTypes.Boolean)
         {
-            if (bool.TryParse(claim.Value, out bool value))
+            if (bool.TryParse(claim.Value, out var value))
             {
                 return value;
             }
@@ -77,7 +77,7 @@ internal static class ClaimsExtensions
         {
             try
             {
-                return System.Text.Json.JsonSerializer.Deserialize<JsonElement>(claim.Value);
+                return JsonSerializer.Deserialize<JsonElement>(claim.Value);
             }
             catch { }
         }

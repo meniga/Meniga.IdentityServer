@@ -55,7 +55,7 @@ public static class AuthenticationPropertiesExtensions
             return DecodeList(value);
         }
 
-        return Enumerable.Empty<string>();
+        return [];
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ public static class AuthenticationPropertiesExtensions
             return ObjectSerializer.FromString<string[]>(value);
         }
 
-        return Enumerable.Empty<string>();
+        return [];
     }
 
     private static string EncodeList(IEnumerable<string> list)

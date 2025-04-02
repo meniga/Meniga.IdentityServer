@@ -48,7 +48,7 @@ public class DefaultCorsPolicyService : ICorsPolicyService
     /// <returns></returns>
     public virtual Task<bool> IsOriginAllowedAsync(string origin)
     {
-        if (!String.IsNullOrWhiteSpace(origin))
+        if (!string.IsNullOrWhiteSpace(origin))
         {
             if (AllowAll)
             {

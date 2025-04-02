@@ -34,7 +34,7 @@ internal static class StringExtensions
     public static IEnumerable<string> FromSpaceSeparatedString(this string input)
     {
         input = input.Trim();
-        return input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        return input.Split([' '], StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 
     public static List<string> ParseScopesString(this string scopes)
@@ -45,7 +45,7 @@ internal static class StringExtensions
         }
 
         scopes = scopes.Trim();
-        var parsedScopes = scopes.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
+        var parsedScopes = scopes.Split([' '], StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
 
         if (parsedScopes.Any())
         {
@@ -130,7 +130,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string CleanUrlPath(this string url)
     {
-        if (String.IsNullOrWhiteSpace(url)) url = "/";
+        if (string.IsNullOrWhiteSpace(url)) url = "/";
 
         if (url != "/" && url.EndsWith("/"))
         {

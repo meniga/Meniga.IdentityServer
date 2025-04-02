@@ -52,7 +52,7 @@ public static class IdentityServerApplicationBuilderExtensions
         if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
         var logger = loggerFactory.CreateLogger("IdentityServer4.Startup");
-        logger.LogInformation("Starting IdentityServer4 version {version}", typeof(IdentityServer4.Hosting.IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+        logger.LogInformation("Starting IdentityServer4 version {version}", typeof(IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
 
         var scopeFactory = app.ApplicationServices.GetService<IServiceScopeFactory>();
 

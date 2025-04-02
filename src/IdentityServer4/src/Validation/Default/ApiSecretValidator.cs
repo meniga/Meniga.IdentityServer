@@ -62,7 +62,7 @@ public class ApiSecretValidator : IApiSecretValidator
         }
 
         // load API resource
-        var apis = await _resources.FindApiResourcesByNameAsync(new[] { parsedSecret.Id });
+        var apis = await _resources.FindApiResourcesByNameAsync([parsedSecret.Id]);
         if (apis == null || !apis.Any())
         {
             await RaiseFailureEventAsync(parsedSecret.Id, "Unknown API resource");

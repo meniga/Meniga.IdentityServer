@@ -28,7 +28,7 @@ public static class HttpContextExtensions
         if (context == null) throw new ArgumentNullException(nameof(context));
         if (value == null) throw new ArgumentNullException(nameof(value));
 
-        var split = value.Split(new[] { "://" }, StringSplitOptions.RemoveEmptyEntries);
+        var split = value.Split(["://"], StringSplitOptions.RemoveEmptyEntries);
 
         var request = context.Request;
         request.Scheme = split.First();

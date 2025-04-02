@@ -47,7 +47,7 @@ public class ResourceValidationResult
     /// <summary>
     /// The resources of the result.
     /// </summary>
-    public Resources Resources { get; set; } = new Resources();
+    public Resources Resources { get; set; } = new();
 
     /// <summary>
     /// The parsed scopes represented by the result.
@@ -71,7 +71,7 @@ public class ResourceValidationResult
     /// <returns></returns>
     public ResourceValidationResult Filter(IEnumerable<string> scopeValues)
     {
-        scopeValues ??= Enumerable.Empty<string>();
+        scopeValues ??= [];
 
         var offline = scopeValues.Contains(IdentityServerConstants.StandardScopes.OfflineAccess);
 

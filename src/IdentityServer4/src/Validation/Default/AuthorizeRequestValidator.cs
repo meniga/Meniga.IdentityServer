@@ -28,7 +28,7 @@ internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     private readonly ILogger _logger;
 
     private readonly ResponseTypeEqualityComparer
-        _responseTypeEqualityComparer = new ResponseTypeEqualityComparer();
+        _responseTypeEqualityComparer = new();
 
     public AuthorizeRequestValidator(
         IdentityServerOptions options,

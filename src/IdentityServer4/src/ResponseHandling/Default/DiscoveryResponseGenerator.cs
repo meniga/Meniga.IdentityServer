@@ -332,7 +332,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
         // custom entries
         if (!Options.Discovery.CustomEntries.IsNullOrEmpty())
         {
-            foreach ((string key, object value) in Options.Discovery.CustomEntries)
+            foreach ((var key, var value) in Options.Discovery.CustomEntries)
             {
                 if (entries.ContainsKey(key))
                 {
@@ -385,7 +385,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                         x5t = thumbprint,
                         e = exponent,
                         n = modulus,
-                        x5c = new[] { cert64 },
+                        x5c = [cert64],
                         alg = key.SigningAlgorithm
                     };
                     webKeys.Add(rsaJsonWebKey);
@@ -405,7 +405,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                         x = x,
                         y = y,
                         crv = CryptoHelper.GetCrvValueFromCurve(parameters.Curve),
-                        x5c = new[] { cert64 },
+                        x5c = [cert64],
                         alg = key.SigningAlgorithm
                     };
                     webKeys.Add(ecdsaJsonWebKey);

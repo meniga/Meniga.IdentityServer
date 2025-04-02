@@ -80,22 +80,22 @@ public class TokenResponseGenerator : ITokenResponseGenerator
     /// </summary>
     /// <param name="request">The request.</param>
     /// <returns></returns>
-    public virtual async Task<TokenResponse> ProcessAsync(TokenRequestValidationResult request)
+    public virtual Task<TokenResponse> ProcessAsync(TokenRequestValidationResult request)
     {
         switch (request.ValidatedRequest.GrantType)
         {
             case OidcConstants.GrantTypes.ClientCredentials:
-                return await ProcessClientCredentialsRequestAsync(request);
+                return ProcessClientCredentialsRequestAsync(request);
             case OidcConstants.GrantTypes.Password:
-                return await ProcessPasswordRequestAsync(request);
+                return ProcessPasswordRequestAsync(request);
             case OidcConstants.GrantTypes.AuthorizationCode:
-                return await ProcessAuthorizationCodeRequestAsync(request);
+                return ProcessAuthorizationCodeRequestAsync(request);
             case OidcConstants.GrantTypes.RefreshToken:
-                return await ProcessRefreshTokenRequestAsync(request);
+                return ProcessRefreshTokenRequestAsync(request);
             case OidcConstants.GrantTypes.DeviceCode:
-                return await ProcessDeviceCodeRequestAsync(request);
+                return ProcessDeviceCodeRequestAsync(request);
             default:
-                return await ProcessExtensionGrantRequestAsync(request);
+                return ProcessExtensionGrantRequestAsync(request);
         }
     }
 

@@ -87,5 +87,5 @@ public class ProfileDataRequestContext
     /// <value>
     /// The issued claims.
     /// </value>
-    public List<Claim> IssuedClaims { get; set; } = new List<Claim>();
+    public List<Claim> IssuedClaims { get; set; } = [];
 }

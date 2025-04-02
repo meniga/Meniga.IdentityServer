@@ -130,7 +130,7 @@ public class ValidatedAuthorizeRequest : ValidatedRequest
     /// <value>
     /// The collection of prompt modes.
     /// </value>
-    public IEnumerable<string> PromptModes { get; set; } = Enumerable.Empty<string>();
+    public IEnumerable<string> PromptModes { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the maximum age.
@@ -170,7 +170,7 @@ public class ValidatedAuthorizeRequest : ValidatedRequest
     /// <value>
     /// The request object values
     /// </value>
-    public Dictionary<string, string> RequestObjectValues { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> RequestObjectValues { get; set; } = new();
 
     /// <summary>
     /// Gets or sets the request object (either passed by value or retrieved by reference)
@@ -199,7 +199,7 @@ public class ValidatedAuthorizeRequest : ValidatedRequest
     /// </summary>
     public ValidatedAuthorizeRequest()
     {
-        RequestedScopes = new List<string>();
-        AuthenticationContextReferenceClasses = new List<string>();
+        RequestedScopes = [];
+        AuthenticationContextReferenceClasses = [];
     }
 }

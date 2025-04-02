@@ -23,7 +23,7 @@ internal class CheckSessionResult : IEndpointResult
 
     private IdentityServerOptions _options;
     private static volatile string FormattedHtml;
-    private static readonly object Lock = new object();
+    private static readonly object Lock = new();
     private static volatile string LastCheckSessionCookieName;
 
     private void Init(HttpContext context)
@@ -31,14 +31,14 @@ internal class CheckSessionResult : IEndpointResult
         _options = _options ?? context.RequestServices.GetRequiredService<IdentityServerOptions>();
     }
 
-    public async Task ExecuteAsync(HttpContext context)
+    public Task ExecuteAsync(HttpContext context)
     {
         Init(context);
 
         AddCspHeaders(context);
 
         var html = GetHtml(_options.Authentication.CheckSessionCookieName);
-        await context.Response.WriteHtmlAsync(html);
+        return context.Response.WriteHtmlAsync(html);
     }
 
     private void AddCspHeaders(HttpContext context)

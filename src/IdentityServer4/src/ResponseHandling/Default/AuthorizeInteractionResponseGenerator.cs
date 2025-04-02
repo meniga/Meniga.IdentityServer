@@ -133,7 +133,7 @@ public class AuthorizeInteractionResponseGenerator : IAuthorizeInteractionRespon
         var isAuthenticated = request.Subject.IsAuthenticated();
             
         // user de-activated
-        bool isActive = false;
+        var isActive = false;
 
         if (isAuthenticated)
         {

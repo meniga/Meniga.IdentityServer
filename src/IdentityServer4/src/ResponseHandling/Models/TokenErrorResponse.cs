@@ -33,5 +33,5 @@ public class TokenErrorResponse
     /// <value>
     /// The custom.
     /// </value>
-    public Dictionary<string, object> Custom { get; set; } = new Dictionary<string, object>();
+    public Dictionary<string, object> Custom { get; set; } = new();
 }

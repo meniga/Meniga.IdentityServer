@@ -67,7 +67,7 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         _logger.LogTrace("Token found: {token}", token);
 
-        TokenValidationResult result = await _tokenValidator.ValidateAccessTokenAsync(token, Options.ExpectedScope);
+        var result = await _tokenValidator.ValidateAccessTokenAsync(token, Options.ExpectedScope);
 
         if (result.IsError)
         {
@@ -78,16 +78,15 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         _logger.LogTrace("Successfully validated the token.");
 
-        ClaimsIdentity claimsIdentity = new ClaimsIdentity(result.Claims, Scheme.Name, JwtClaimTypes.Name, JwtClaimTypes.Role);
-        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-        AuthenticationProperties authenticationProperties = new AuthenticationProperties();
+        var claimsIdentity = new ClaimsIdentity(result.Claims, Scheme.Name, JwtClaimTypes.Name, JwtClaimTypes.Role);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+        var authenticationProperties = new AuthenticationProperties();
 
         if (Options.SaveToken)
         {
-            authenticationProperties.StoreTokens(new[]
-            {
+            authenticationProperties.StoreTokens([
                 new AuthenticationToken { Name = "access_token", Value = token }
-            });
+            ]);
         }
 
         var claimsTransformationContext = new ClaimsTransformationContext
@@ -98,7 +97,7 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         await Events.ClaimsTransformation(claimsTransformationContext);
 
-        AuthenticationTicket authenticationTicket = new AuthenticationTicket(claimsTransformationContext.Principal, authenticationProperties, Scheme.Name);
+        var authenticationTicket = new AuthenticationTicket(claimsTransformationContext.Principal, authenticationProperties, Scheme.Name);
         return AuthenticateResult.Success(authenticationTicket);
     }
 }
