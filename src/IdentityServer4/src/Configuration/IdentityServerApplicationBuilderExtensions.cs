@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using System.Reflection;
 using IdentityServer4.Configuration;
 using IdentityServer4.Extensions;
 using IdentityServer4.Hosting;
@@ -9,7 +10,6 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Reflection;
 
 namespace Microsoft.AspNetCore.Builder;
 
@@ -56,25 +56,25 @@ public static class IdentityServerApplicationBuilderExtensions
 
         var scopeFactory = app.ApplicationServices.GetService<IServiceScopeFactory>();
 
-        using (var scope = scopeFactory.CreateScope())
-        {
-            var serviceProvider = scope.ServiceProvider;
+        using var scope = scopeFactory.CreateScope();
+        var serviceProvider = scope.ServiceProvider;
 
-            TestService(serviceProvider, typeof(IPersistedGrantStore), logger, "No storage mechanism for grants specified. Use the 'AddInMemoryPersistedGrants' extension method to register a development version.");
-            TestService(serviceProvider, typeof(IClientStore), logger, "No storage mechanism for clients specified. Use the 'AddInMemoryClients' extension method to register a development version.");
-            TestService(serviceProvider, typeof(IResourceStore), logger, "No storage mechanism for resources specified. Use the 'AddInMemoryIdentityResources' or 'AddInMemoryApiResources' extension method to register a development version.");
+        TestService(serviceProvider, typeof(IPersistedGrantStore), logger,
+            "No storage mechanism for grants specified. Use the 'AddInMemoryPersistedGrants' extension method to register a development version.");
+        TestService(serviceProvider, typeof(IClientStore), logger,
+            "No storage mechanism for clients specified. Use the 'AddInMemoryClients' extension method to register a development version.");
+        TestService(serviceProvider, typeof(IResourceStore), logger,
+            "No storage mechanism for resources specified. Use the 'AddInMemoryIdentityResources' or 'AddInMemoryApiResources' extension method to register a development version.");
 
-            var persistedGrants = serviceProvider.GetService(typeof(IPersistedGrantStore));
-            if (persistedGrants.GetType().FullName == typeof(InMemoryPersistedGrantStore).FullName)
-            {
-                logger.LogInformation("You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.");
-            }
+        var persistedGrants = serviceProvider.GetService(typeof(IPersistedGrantStore));
+        if (persistedGrants.GetType().FullName == typeof(InMemoryPersistedGrantStore).FullName)
+            logger.LogInformation(
+                "You are using the in-memory version of the persisted grant store. This will store consent decisions, authorization codes, refresh and reference tokens in memory only. If you are using any of those features in production, you want to switch to a different store implementation.");
 
-            var options = serviceProvider.GetRequiredService<IdentityServerOptions>();
-            ValidateOptions(options, logger);
+        var options = serviceProvider.GetRequiredService<IdentityServerOptions>();
+        ValidateOptions(options, logger);
 
-            ValidateAsync(serviceProvider, logger).GetAwaiter().GetResult();
-        }
+        ValidateAsync(serviceProvider, logger).GetAwaiter().GetResult();
     }
 
     private static async Task ValidateAsync(IServiceProvider services, ILogger logger)

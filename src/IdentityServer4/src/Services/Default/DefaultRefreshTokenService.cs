@@ -2,14 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
-using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using IdentityModel;
 using IdentityServer4.Validation;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 
 namespace IdentityServer4.Services;
 
@@ -84,7 +83,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
         /////////////////////////////////////////////
         // check if refresh token has expired
         /////////////////////////////////////////////
-        if (refreshToken.CreationTime.HasExceeded(refreshToken.Lifetime, Clock.UtcNow.DateTime))
+        if (refreshToken.CreationTime.HasExceeded(refreshToken.Lifetime, Clock.GetUtcNow().DateTime))
         {
             Logger.LogWarning("Refresh token has expired.");
             return invalidGrant;

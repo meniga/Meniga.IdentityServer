@@ -5,7 +5,6 @@
 using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 
 namespace IdentityServer4.Services;
@@ -160,7 +159,7 @@ public class DefaultBackChannelLogoutService : IBackChannelLogoutService
         {
             new(JwtClaimTypes.Subject, request.SubjectId),
             new(JwtClaimTypes.Audience, request.ClientId),
-            new(JwtClaimTypes.IssuedAt, Clock.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+            new(JwtClaimTypes.IssuedAt, Clock.GetUtcNow().ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
             new(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)),
             new(JwtClaimTypes.Events, json, IdentityServerConstants.ClaimValueTypes.Json)
         };
