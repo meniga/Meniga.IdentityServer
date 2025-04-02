@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Microsoft.AspNetCore.WebUtilities;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace IdentityServer4.Extensions;
 
@@ -15,17 +15,11 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string ToSpaceSeparatedString(this IEnumerable<string> list)
     {
-        if (list == null)
-        {
-            return string.Empty;
-        }
+        if (list == null) return string.Empty;
 
         var sb = new StringBuilder(100);
 
-        foreach (var element in list)
-        {
-            sb.Append(element + " ");
-        }
+        foreach (var element in list) sb.Append(element + " ");
 
         return sb.ToString().Trim();
     }
@@ -39,10 +33,7 @@ internal static class StringExtensions
 
     public static List<string> ParseScopesString(this string scopes)
     {
-        if (scopes.IsMissing())
-        {
-            return null;
-        }
+        if (scopes.IsMissing()) return null;
 
         scopes = scopes.Trim();
         var parsedScopes = scopes.Split([' '], StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
@@ -65,14 +56,8 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static bool IsMissingOrTooLong(this string value, int maxLength)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return true;
-        }
-        if (value.Length > maxLength)
-        {
-            return true;
-        }
+        if (string.IsNullOrWhiteSpace(value)) return true;
+        if (value.Length > maxLength) return true;
 
         return false;
     }
@@ -86,10 +71,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string EnsureLeadingSlash(this string url)
     {
-        if (url != null && !url.StartsWith("/"))
-        {
-            return "/" + url;
-        }
+        if (url != null && !url.StartsWith("/")) return "/" + url;
 
         return url;
     }
@@ -97,10 +79,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string EnsureTrailingSlash(this string url)
     {
-        if (url != null && !url.EndsWith("/"))
-        {
-            return url + "/";
-        }
+        if (url != null && !url.EndsWith("/")) return url + "/";
 
         return url;
     }
@@ -108,10 +87,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string RemoveLeadingSlash(this string url)
     {
-        if (url != null && url.StartsWith("/"))
-        {
-            url = url.Substring(1);
-        }
+        if (url != null && url.StartsWith("/")) url = url.Substring(1);
 
         return url;
     }
@@ -119,10 +95,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string RemoveTrailingSlash(this string url)
     {
-        if (url != null && url.EndsWith("/"))
-        {
-            url = url.Substring(0, url.Length - 1);
-        }
+        if (url != null && url.EndsWith("/")) url = url.Substring(0, url.Length - 1);
 
         return url;
     }
@@ -132,10 +105,7 @@ internal static class StringExtensions
     {
         if (string.IsNullOrWhiteSpace(url)) url = "/";
 
-        if (url != "/" && url.EndsWith("/"))
-        {
-            url = url.Substring(0, url.Length - 1);
-        }
+        if (url != "/" && url.EndsWith("/")) url = url.Substring(0, url.Length - 1);
 
         return url;
     }
@@ -143,25 +113,16 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static bool IsLocalUrl(this string url)
     {
-        if (string.IsNullOrEmpty(url))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(url)) return false;
 
         // Allows "/" or "/foo" but not "//" or "/\".
         if (url[0] == '/')
         {
             // url is exactly "/"
-            if (url.Length == 1)
-            {
-                return true;
-            }
+            if (url.Length == 1) return true;
 
             // url doesn't start with "//" or "/\"
-            if (url[1] != '/' && url[1] != '\\')
-            {
-                return true;
-            }
+            if (url[1] != '/' && url[1] != '\\') return true;
 
             return false;
         }
@@ -170,16 +131,10 @@ internal static class StringExtensions
         if (url[0] == '~' && url.Length > 1 && url[1] == '/')
         {
             // url is exactly "~/"
-            if (url.Length == 2)
-            {
-                return true;
-            }
+            if (url.Length == 2) return true;
 
             // url doesn't start with "~//" or "~/\"
-            if (url[2] != '/' && url[2] != '\\')
-            {
-                return true;
-            }
+            if (url[2] != '/' && url[2] != '\\') return true;
 
             return false;
         }
@@ -191,13 +146,8 @@ internal static class StringExtensions
     public static string AddQueryString(this string url, string query)
     {
         if (!url.Contains("?"))
-        {
             url += "?";
-        }
-        else if (!url.EndsWith("&"))
-        {
-            url += "&";
-        }
+        else if (!url.EndsWith("&")) url += "&";
 
         return url + query;
     }
@@ -211,10 +161,7 @@ internal static class StringExtensions
     [DebuggerStepThrough]
     public static string AddHashFragment(this string url, string query)
     {
-        if (!url.Contains("#"))
-        {
-            url += "#";
-        }
+        if (!url.Contains("#")) url += "#";
 
         return url + query;
     }
@@ -225,18 +172,12 @@ internal static class StringExtensions
         if (url != null)
         {
             var idx = url.IndexOf('?');
-            if (idx >= 0)
-            {
-                url = url.Substring(idx + 1);
-            }
+            if (idx >= 0) url = url.Substring(idx + 1);
             var query = QueryHelpers.ParseNullableQuery(url);
-            if (query != null)
-            {
-                return query.AsNameValueCollection();
-            }
+            if (query != null) return query.AsNameValueCollection();
         }
 
-        return new NameValueCollection();           
+        return [];
     }
 
     public static string GetOrigin(this string url)
@@ -253,22 +194,16 @@ internal static class StringExtensions
                 return null;
             }
 
-            if (uri.Scheme == "http" || uri.Scheme == "https")
-            {
-                return $"{uri.Scheme}://{uri.Authority}";
-            }
+            if (uri.Scheme == "http" || uri.Scheme == "https") return $"{uri.Scheme}://{uri.Authority}";
         }
 
         return null;
     }
-        
+
     public static string Obfuscate(this string value)
     {
         var last4Chars = "****";
-        if (value.IsPresent() && value.Length > 4)
-        {
-            last4Chars = value.Substring(value.Length - 4);
-        }
+        if (value.IsPresent() && value.Length > 4) last4Chars = value.Substring(value.Length - 4);
 
         return "****" + last4Chars;
     }

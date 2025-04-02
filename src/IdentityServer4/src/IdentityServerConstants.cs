@@ -9,6 +9,24 @@ namespace IdentityServer4;
 
 public static class IdentityServerConstants
 {
+    public enum ECDsaSigningAlgorithm
+    {
+        ES256,
+        ES384,
+        ES512
+    }
+
+    public enum RsaSigningAlgorithm
+    {
+        RS256,
+        RS384,
+        RS512,
+
+        PS256,
+        PS384,
+        PS512
+    }
+
     public const string LocalIdentityProvider = "local";
     public const string DefaultCookieAuthenticationScheme = "idsrv";
     public const string SignoutScheme = "idsrv";
@@ -18,23 +36,38 @@ public static class IdentityServerConstants
 
     public const string JwtRequestClientKey = "idsrv.jwtrequesturi.client";
 
+    public static IEnumerable<string> SupportedSigningAlgorithms =
+    [
+        SecurityAlgorithms.RsaSha256,
+        SecurityAlgorithms.RsaSha384,
+        SecurityAlgorithms.RsaSha512,
+
+        SecurityAlgorithms.RsaSsaPssSha256,
+        SecurityAlgorithms.RsaSsaPssSha384,
+        SecurityAlgorithms.RsaSsaPssSha512,
+
+        SecurityAlgorithms.EcdsaSha256,
+        SecurityAlgorithms.EcdsaSha384,
+        SecurityAlgorithms.EcdsaSha512
+    ];
+
     /// <summary>
-    /// Constants for local IdentityServer access token authentication.
+    ///     Constants for local IdentityServer access token authentication.
     /// </summary>
     public static class LocalApi
     {
         /// <summary>
-        /// The authentication scheme when using the AddLocalApi helper.
+        ///     The authentication scheme when using the AddLocalApi helper.
         /// </summary>
         public const string AuthenticationScheme = "IdentityServerAccessToken";
 
         /// <summary>
-        /// The API scope name when using the AddLocalApiAuthentication helper.
+        ///     The API scope name when using the AddLocalApiAuthentication helper.
         /// </summary>
         public const string ScopeName = "IdentityServerApi";
 
         /// <summary>
-        /// The authorization policy name when using the AddLocalApiAuthentication helper.
+        ///     The authorization policy name when using the AddLocalApiAuthentication helper.
         /// </summary>
         public const string PolicyName = AuthenticationScheme;
     }
@@ -94,52 +127,37 @@ public static class IdentityServerConstants
         public const string DeviceCodeValidation = "DeviceCodeValidation";
     }
 
-    public static IEnumerable<string> SupportedSigningAlgorithms = new List<string>
-    {
-        SecurityAlgorithms.RsaSha256,
-        SecurityAlgorithms.RsaSha384,
-        SecurityAlgorithms.RsaSha512,
-
-        SecurityAlgorithms.RsaSsaPssSha256,
-        SecurityAlgorithms.RsaSsaPssSha384,
-        SecurityAlgorithms.RsaSsaPssSha512,
-
-        SecurityAlgorithms.EcdsaSha256,
-        SecurityAlgorithms.EcdsaSha384,
-        SecurityAlgorithms.EcdsaSha512
-    };
-
-    public enum RsaSigningAlgorithm
-    {
-        RS256,
-        RS384,
-        RS512,
-
-        PS256,
-        PS384,
-        PS512
-    }
-
-    public enum ECDsaSigningAlgorithm
-    {
-        ES256,
-        ES384,
-        ES512
-    }
-
     public static class StandardScopes
     {
-        /// <summary>REQUIRED. Informs the Authorization Server that the Client is making an OpenID Connect request. If the <c>openid</c> scope value is not present, the behavior is entirely unspecified.</summary>
+        /// <summary>
+        ///     REQUIRED. Informs the Authorization Server that the Client is making an OpenID Connect request. If the
+        ///     <c>openid</c> scope value is not present, the behavior is entirely unspecified.
+        /// </summary>
         public const string OpenId = "openid";
-        /// <summary>OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: <c>name</c>, <c>family_name</c>, <c>given_name</c>, <c>middle_name</c>, <c>nickname</c>, <c>preferred_username</c>, <c>profile</c>, <c>picture</c>, <c>website</c>, <c>gender</c>, <c>birthdate</c>, <c>zoneinfo</c>, <c>locale</c>, and <c>updated_at</c>.</summary>
+
+        /// <summary>
+        ///     OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: <c>name</c>,
+        ///     <c>family_name</c>, <c>given_name</c>, <c>middle_name</c>, <c>nickname</c>, <c>preferred_username</c>,
+        ///     <c>profile</c>, <c>picture</c>, <c>website</c>, <c>gender</c>, <c>birthdate</c>, <c>zoneinfo</c>, <c>locale</c>,
+        ///     and <c>updated_at</c>.
+        /// </summary>
         public const string Profile = "profile";
+
         /// <summary>OPTIONAL. This scope value requests access to the <c>email</c> and <c>email_verified</c> Claims.</summary>
         public const string Email = "email";
+
         /// <summary>OPTIONAL. This scope value requests access to the <c>address</c> Claim.</summary>
         public const string Address = "address";
+
         /// <summary>OPTIONAL. This scope value requests access to the <c>phone_number</c> and <c>phone_number_verified</c> Claims.</summary>
         public const string Phone = "phone";
-        /// <summary>This scope value MUST NOT be used with the OpenID Connect Implicit Client Implementer's Guide 1.0. See the OpenID Connect Basic Client Implementer's Guide 1.0 (http://openid.net/specs/openid-connect-implicit-1_0.html#OpenID.Basic) for its usage in that subset of OpenID Connect.</summary>
+
+        /// <summary>
+        ///     This scope value MUST NOT be used with the OpenID Connect Implicit Client Implementer's Guide 1.0. See the
+        ///     OpenID Connect Basic Client Implementer's Guide 1.0
+        ///     (http://openid.net/specs/openid-connect-implicit-1_0.html#OpenID.Basic) for its usage in that subset of OpenID
+        ///     Connect.
+        /// </summary>
         public const string OfflineAccess = "offline_access";
     }
 

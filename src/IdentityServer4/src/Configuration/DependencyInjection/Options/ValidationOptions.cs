@@ -5,15 +5,16 @@
 namespace IdentityServer4.Configuration;
 
 /// <summary>
-/// The ValidationOptions contains settings that affect some of the default validation behavior.
+///     The ValidationOptions contains settings that affect some of the default validation behavior.
 /// </summary>
 public class ValidationOptions
 {
     /// <summary>
-    ///  Collection of URI scheme prefixes that should never be used as custom URI schemes in the redirect_uri passed to tha authorize endpoint.
+    ///     Collection of URI scheme prefixes that should never be used as custom URI schemes in the redirect_uri passed to tha
+    ///     authorize endpoint.
     /// </summary>
-    public ICollection<string> InvalidRedirectUriPrefixes { get; } = new HashSet<string>
-    {
+    public ICollection<string> InvalidRedirectUriPrefixes { get; } =
+    [
         "javascript:",
         "file:",
         "data:",
@@ -26,5 +27,5 @@ public class ValidationOptions
         "view-source:",
         "ws:",
         "wss:"
-    };
+    ];
 }

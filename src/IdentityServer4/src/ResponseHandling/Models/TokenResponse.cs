@@ -5,55 +5,55 @@
 namespace IdentityServer4.ResponseHandling;
 
 /// <summary>
-/// Models a token response
+///     Models a token response
 /// </summary>
 public class TokenResponse
 {
     /// <summary>
-    /// Gets or sets the identity token.
+    ///     Gets or sets the identity token.
     /// </summary>
     /// <value>
-    /// The identity token.
+    ///     The identity token.
     /// </value>
     public string IdentityToken { get; set; }
 
     /// <summary>
-    /// Gets or sets the access token.
+    ///     Gets or sets the access token.
     /// </summary>
     /// <value>
-    /// The access token.
+    ///     The access token.
     /// </value>
     public string AccessToken { get; set; }
 
     /// <summary>
-    /// Gets or sets the access token lifetime.
+    ///     Gets or sets the access token lifetime.
     /// </summary>
     /// <value>
-    /// The access token lifetime.
+    ///     The access token lifetime.
     /// </value>
     public int AccessTokenLifetime { get; set; }
 
     /// <summary>
-    /// Gets or sets the refresh token.
+    ///     Gets or sets the refresh token.
     /// </summary>
     /// <value>
-    /// The refresh token.
+    ///     The refresh token.
     /// </value>
     public string RefreshToken { get; set; }
 
     /// <summary>
-    /// Gets or sets the scope.
+    ///     Gets or sets the scope.
     /// </summary>
     /// <value>
-    /// The scope.
+    ///     The scope.
     /// </value>
     public string Scope { get; set; }
 
     /// <summary>
-    /// Gets or sets the custom entries.
+    ///     Gets or sets the custom entries.
     /// </summary>
     /// <value>
-    /// The custom entries.
+    ///     The custom entries.
     /// </value>
-    public Dictionary<string, object> Custom { get; set; } = new();
+    public Dictionary<string, object> Custom { get; set; } = [];
 }

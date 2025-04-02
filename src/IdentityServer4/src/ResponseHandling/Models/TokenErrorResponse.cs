@@ -7,31 +7,31 @@ using IdentityModel;
 namespace IdentityServer4.ResponseHandling;
 
 /// <summary>
-/// Models a token error response
+///     Models a token error response
 /// </summary>
 public class TokenErrorResponse
 {
     /// <summary>
-    /// Gets or sets the error.
+    ///     Gets or sets the error.
     /// </summary>
     /// <value>
-    /// The error.
+    ///     The error.
     /// </value>
     public string Error { get; set; } = OidcConstants.TokenErrors.InvalidRequest;
 
     /// <summary>
-    /// Gets or sets the error description.
+    ///     Gets or sets the error description.
     /// </summary>
     /// <value>
-    /// The error description.
+    ///     The error description.
     /// </value>
     public string ErrorDescription { get; set; }
 
     /// <summary>
-    /// Gets or sets the custom entries.
+    ///     Gets or sets the custom entries.
     /// </summary>
     /// <value>
-    /// The custom.
+    ///     The custom.
     /// </value>
-    public Dictionary<string, object> Custom { get; set; } = new();
+    public Dictionary<string, object> Custom { get; set; } = [];
 }

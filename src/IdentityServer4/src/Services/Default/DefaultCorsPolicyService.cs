@@ -7,42 +7,42 @@ using Microsoft.Extensions.Logging;
 namespace IdentityServer4.Services;
 
 /// <summary>
-/// Default CORS policy service.
+///     Default CORS policy service.
 /// </summary>
 public class DefaultCorsPolicyService : ICorsPolicyService
 {
     /// <summary>
-    /// Logger
+    ///     Logger
     /// </summary>
     protected readonly ILogger Logger;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DefaultCorsPolicyService"/> class.
+    ///     Initializes a new instance of the <see cref="DefaultCorsPolicyService" /> class.
     /// </summary>
     public DefaultCorsPolicyService(ILogger<DefaultCorsPolicyService> logger)
     {
         Logger = logger;
-        AllowedOrigins = new HashSet<string>();
+        AllowedOrigins = [];
     }
 
     /// <summary>
-    /// The list allowed origins that are allowed.
+    ///     The list allowed origins that are allowed.
     /// </summary>
     /// <value>
-    /// The allowed origins.
+    ///     The allowed origins.
     /// </value>
     public ICollection<string> AllowedOrigins { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether all origins are allowed.
+    ///     Gets or sets a value indicating whether all origins are allowed.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if allow all; otherwise, <c>false</c>.
+    ///     <c>true</c> if allow all; otherwise, <c>false</c>.
     /// </value>
     public bool AllowAll { get; set; }
 
     /// <summary>
-    /// Determines whether the origin allowed.
+    ///     Determines whether the origin allowed.
     /// </summary>
     /// <param name="origin">The origin.</param>
     /// <returns></returns>
@@ -63,10 +63,8 @@ public class DefaultCorsPolicyService : ICorsPolicyService
                     Logger.LogDebug("AllowedOrigins configured and origin {0} is allowed", origin);
                     return Task.FromResult(true);
                 }
-                else
-                {
-                    Logger.LogDebug("AllowedOrigins configured and origin {0} is not allowed", origin);
-                }
+
+                Logger.LogDebug("AllowedOrigins configured and origin {0} is not allowed", origin);
             }
 
             Logger.LogDebug("Exiting; origin {0} is not allowed", origin);
