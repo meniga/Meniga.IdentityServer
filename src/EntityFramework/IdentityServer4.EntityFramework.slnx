@@ -1,0 +1,12 @@
+<Solution>
+    <Folder Name="/seeding/">
+        <Project Path="migrations/SqlServer/SqlServer.csproj"/>
+    </Folder>
+    <Folder Name="/src/">
+        <Project Path="host/Host.csproj"/>
+        <Project Path="src/IdentityServer4.EntityFramework.csproj"/>
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="test/IdentityServer4.EntityFramework.Tests/IdentityServer4.EntityFramework.Tests.csproj"/>
+    </Folder>
+</Solution>
