@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityModel;
-using IdentityServer4.Extensions;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Text;
+using IdentityModel;
+using IdentityServer4.Extensions;
 
 namespace IdentityServer4.Models;
 
@@ -86,13 +86,11 @@ public class ConsentRequest
             var normalizedScopes = ScopesRequested?.OrderBy(x => x).Distinct().Aggregate((x, y) => x + "," + y);
             var value = $"{ClientId}:{Subject}:{Nonce}:{normalizedScopes}";
 
-            using (var sha = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(value);
-                var hash = sha.ComputeHash(bytes);
+            using var sha = SHA256.Create();
+            var bytes = Encoding.UTF8.GetBytes(value);
+            var hash = sha.ComputeHash(bytes);
 
-                return Base64Url.Encode(hash);
-            }
+            return Base64Url.Encode(hash);
         }
     }
 }

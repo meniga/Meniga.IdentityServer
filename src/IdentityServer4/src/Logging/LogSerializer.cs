@@ -14,7 +14,7 @@ internal static class LogSerializer
 {
     static readonly JsonSerializerOptions Options = new()
     {
-        IgnoreNullValues = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true
     };
 

@@ -24,14 +24,14 @@
         <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
+    <!-- <ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
         <PackageReference Include="SonarAnalyzer.CSharp" Version="*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>
                 runtime; build; native; contentfiles; analyzers; buildtransitive
             </IncludeAssets>
         </PackageReference>
-    </ItemGroup>
+    </ItemGroup> -->
 
     <ItemGroup>
         <!--build related-->

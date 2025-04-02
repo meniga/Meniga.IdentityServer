@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4.Extensions;
 using System.Security.Cryptography;
 using System.Text;
+using IdentityServer4.Extensions;
 
 namespace IdentityServer4.Models;
 
@@ -22,13 +22,11 @@ public static class HashExtensions
     {
         if (input.IsMissing()) return string.Empty;
 
-        using (var sha = SHA256.Create())
-        {
-            var bytes = Encoding.UTF8.GetBytes(input);
-            var hash = sha.ComputeHash(bytes);
+        using var sha = SHA256.Create();
+        var bytes = Encoding.UTF8.GetBytes(input);
+        var hash = sha.ComputeHash(bytes);
 
-            return Convert.ToBase64String(hash);
-        }
+        return Convert.ToBase64String(hash);
     }
 
     /// <summary>
@@ -43,10 +41,8 @@ public static class HashExtensions
             return null;
         }
 
-        using (var sha = SHA256.Create())
-        {
-            return sha.ComputeHash(input);
-        }
+        using var sha = SHA256.Create();
+        return sha.ComputeHash(input);
     }
 
     /// <summary>
@@ -58,12 +54,10 @@ public static class HashExtensions
     {
         if (input.IsMissing()) return string.Empty;
 
-        using (var sha = SHA512.Create())
-        {
-            var bytes = Encoding.UTF8.GetBytes(input);
-            var hash = sha.ComputeHash(bytes);
+        using var sha = SHA512.Create();
+        var bytes = Encoding.UTF8.GetBytes(input);
+        var hash = sha.ComputeHash(bytes);
 
-            return Convert.ToBase64String(hash);
-        }
+        return Convert.ToBase64String(hash);
     }
 }

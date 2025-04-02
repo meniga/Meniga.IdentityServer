@@ -1,8 +1,8 @@
-﻿using IdentityModel;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using IdentityModel;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServer4.Configuration;
 
@@ -61,16 +61,14 @@ public static class CryptoHelper
     /// <returns></returns>
     public static string CreateHashClaimValue(string value, string tokenSigningAlgorithm)
     {
-        using (var sha = GetHashAlgorithmForSigningAlgorithm(tokenSigningAlgorithm))
-        {
-            var hash = sha.ComputeHash(Encoding.ASCII.GetBytes(value));
-            var size = (sha.HashSize / 8) / 2;
+        using var sha = GetHashAlgorithmForSigningAlgorithm(tokenSigningAlgorithm);
+        var hash = sha.ComputeHash(Encoding.ASCII.GetBytes(value));
+        var size = sha.HashSize / 8 / 2;
 
-            var leftPart = new byte[size];
-            Array.Copy(hash, leftPart, size);
+        var leftPart = new byte[size];
+        Array.Copy(hash, leftPart, size);
 
-            return Base64Url.Encode(leftPart);
-        }
+        return Base64Url.Encode(leftPart);
     }
 
     /// <summary>
