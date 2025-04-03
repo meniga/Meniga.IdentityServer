@@ -7,19 +7,19 @@ using IdentityServer4.Models;
 namespace IdentityServer4.Validation;
 
 /// <summary>
-/// Result of validation of requested scopes and resource indicators.
+///     Result of validation of requested scopes and resource indicators.
 /// </summary>
 public class ResourceValidationResult
 {
     /// <summary>
-    /// Ctor
+    ///     Ctor
     /// </summary>
     public ResourceValidationResult()
     {
     }
 
     /// <summary>
-    /// Ctor
+    ///     Ctor
     /// </summary>
     /// <param name="resources"></param>
     public ResourceValidationResult(Resources resources)
@@ -29,7 +29,7 @@ public class ResourceValidationResult
     }
 
     /// <summary>
-    /// Ctor
+    ///     Ctor
     /// </summary>
     /// <param name="resources"></param>
     /// <param name="parsedScopeValues"></param>
@@ -40,32 +40,32 @@ public class ResourceValidationResult
     }
 
     /// <summary>
-    /// Indicates if the result was successful.
+    ///     Indicates if the result was successful.
     /// </summary>
     public bool Succeeded => ParsedScopes.Any() && !InvalidScopes.Any();
 
     /// <summary>
-    /// The resources of the result.
+    ///     The resources of the result.
     /// </summary>
     public Resources Resources { get; set; } = new();
 
     /// <summary>
-    /// The parsed scopes represented by the result.
+    ///     The parsed scopes represented by the result.
     /// </summary>
-    public ICollection<ParsedScopeValue> ParsedScopes { get; set; } = new HashSet<ParsedScopeValue>();
+    public ICollection<ParsedScopeValue> ParsedScopes { get; set; } = [];
 
     /// <summary>
-    /// The original (raw) scope values represented by the validated result.
+    ///     The original (raw) scope values represented by the validated result.
     /// </summary>
     public IEnumerable<string> RawScopeValues => ParsedScopes.Select(x => x.RawValue);
 
     /// <summary>
-    /// The requested scopes that are invalid.
+    ///     The requested scopes that are invalid.
     /// </summary>
-    public ICollection<string> InvalidScopes { get; set; } = new HashSet<string>();
+    public ICollection<string> InvalidScopes { get; set; } = [];
 
     /// <summary>
-    /// Returns new result filted by the scope values.
+    ///     Returns new result filted by the scope values.
     /// </summary>
     /// <param name="scopeValues"></param>
     /// <returns></returns>
@@ -88,8 +88,8 @@ public class ResourceValidationResult
         {
             OfflineAccess = offline
         };
-            
-        return new ResourceValidationResult()
+
+        return new ResourceValidationResult
         {
             Resources = resources,
             ParsedScopes = parsedScopesToKeep

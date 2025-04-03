@@ -23,14 +23,12 @@ internal static class ClaimsExtensions
 
         foreach (var claim in distinctClaims)
         {
-            if (!d.ContainsKey(claim.Type))
+            if (!d.TryGetValue(claim.Type, out var value))
             {
                 d.Add(claim.Type, GetValue(claim));
             }
             else
             {
-                var value = d[claim.Type];
-
                 if (value is List<object> list)
                 {
                     list.Add(GetValue(claim));
@@ -48,8 +46,7 @@ internal static class ClaimsExtensions
 
     private static object GetValue(Claim claim)
     {
-        if (claim.ValueType == ClaimValueTypes.Integer ||
-            claim.ValueType == ClaimValueTypes.Integer32)
+        if (claim.ValueType is ClaimValueTypes.Integer or ClaimValueTypes.Integer32)
         {
             if (int.TryParse(claim.Value, out var value))
             {

@@ -21,8 +21,8 @@ public static class ProfileDataRequestContextExtensions
     /// <returns></returns>
     public static List<Claim> FilterClaims(this ProfileDataRequestContext context, IEnumerable<Claim> claims)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-        if (claims == null) throw new ArgumentNullException(nameof(claims));
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(claims);
 
         return claims.Where(x => context.RequestedClaimTypes.Contains(x.Type)).ToList();
     }

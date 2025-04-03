@@ -33,7 +33,7 @@ public class DefaultEventSink : IEventSink
     /// <exception cref="System.ArgumentNullException">evt</exception>
     public virtual Task PersistAsync(Event evt)
     {
-        if (evt == null) throw new ArgumentNullException(nameof(evt));
+        ArgumentNullException.ThrowIfNull(evt);
 
         _logger.LogInformation("{@event}", evt);
 

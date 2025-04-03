@@ -32,8 +32,8 @@ public static class ICacheExtensions
     public static async Task<T> GetAsync<T>(this ICache<T> cache, string key, TimeSpan duration, Func<Task<T>> get, ILogger logger)
         where T : class
     {
-        if (cache == null) throw new ArgumentNullException(nameof(cache));
-        if (get == null) throw new ArgumentNullException(nameof(get));
+        ArgumentNullException.ThrowIfNull(cache);
+        ArgumentNullException.ThrowIfNull(get);
         if (key == null) return null;
 
         var item = await cache.GetAsync(key);

@@ -32,7 +32,7 @@ public class CustomRedirectResult : IEndpointResult
     /// </exception>
     public CustomRedirectResult(ValidatedAuthorizeRequest request, string url)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
+        ArgumentNullException.ThrowIfNull(request);
         if (url.IsMissing()) throw new ArgumentNullException(nameof(url));
 
         _request = request;

@@ -8,26 +8,28 @@ using IdentityServer4.Validation;
 namespace IdentityServer4.Models;
 
 /// <summary>
-/// Extensions for Resource
+///     Extensions for Resource
 /// </summary>
 public static class ResourceExtensions
 {
     /// <summary>
-    /// Returns the collection of scope values that are required.
+    ///     Returns the collection of scope values that are required.
     /// </summary>
     /// <param name="resourceValidationResult"></param>
     /// <returns></returns>
     public static IEnumerable<string> GetRequiredScopeValues(this ResourceValidationResult resourceValidationResult)
     {
-        var names = resourceValidationResult.Resources.IdentityResources.Where(x => x.Required).Select(x => x.Name).ToList();
+        var names = resourceValidationResult.Resources.IdentityResources.Where(x => x.Required).Select(x => x.Name)
+            .ToList();
         names.AddRange(resourceValidationResult.Resources.ApiScopes.Where(x => x.Required).Select(x => x.Name));
 
-        var values = resourceValidationResult.ParsedScopes.Where(x => names.Contains(x.ParsedName)).Select(x => x.RawValue);
+        var values = resourceValidationResult.ParsedScopes.Where(x => names.Contains(x.ParsedName))
+            .Select(x => x.RawValue);
         return values;
     }
 
     /// <summary>
-    /// Converts to scope names.
+    ///     Converts to scope names.
     /// </summary>
     /// <param name="resources">The resources.</param>
     /// <returns></returns>
@@ -35,16 +37,13 @@ public static class ResourceExtensions
     {
         var names = resources.IdentityResources.Select(x => x.Name).ToList();
         names.AddRange(resources.ApiScopes.Select(x => x.Name));
-        if (resources.OfflineAccess)
-        {
-            names.Add(IdentityServerConstants.StandardScopes.OfflineAccess);
-        }
-            
+        if (resources.OfflineAccess) names.Add(IdentityServerConstants.StandardScopes.OfflineAccess);
+
         return names;
     }
 
     /// <summary>
-    /// Finds the IdentityResource that matches the scope.
+    ///     Finds the IdentityResource that matches the scope.
     /// </summary>
     /// <param name="resources">The resources.</param>
     /// <param name="name">The name.</param>
@@ -58,7 +57,7 @@ public static class ResourceExtensions
     }
 
     /// <summary>
-    /// Finds the API resources that contain the scope.
+    ///     Finds the API resources that contain the scope.
     /// </summary>
     /// <param name="resources">The resources.</param>
     /// <param name="name">The name.</param>
@@ -72,7 +71,7 @@ public static class ResourceExtensions
     }
 
     /// <summary>
-    /// Finds the API scope.
+    ///     Finds the API scope.
     /// </summary>
     /// <param name="resources">The resources.</param>
     /// <param name="name">The name.</param>
@@ -102,33 +101,26 @@ public static class ResourceExtensions
     {
         var apis = apiResources.ToList();
 
-        if (apis.IsNullOrEmpty())
-        {
-            return new List<string>();
-        }
+        if (apis.IsNullOrEmpty()) return [];
 
         // only one API resource request, forward the allowed signing algorithms (if any)
-        if (apis.Count == 1)
-        {
-            return apis.First().AllowedAccessTokenSigningAlgorithms;
-        }
-            
-        var allAlgorithms = apis.Where(r => r.AllowedAccessTokenSigningAlgorithms.Any()).Select(r => r.AllowedAccessTokenSigningAlgorithms).ToList();
+        if (apis.Count == 1) return apis.First().AllowedAccessTokenSigningAlgorithms;
+
+        var allAlgorithms = apis.Where(r => r.AllowedAccessTokenSigningAlgorithms.Any())
+            .Select(r => r.AllowedAccessTokenSigningAlgorithms).ToList();
 
         // resources need to agree on allowed signing algorithms
         if (allAlgorithms.Any())
         {
             var allowedAlgorithms = IntersectLists(allAlgorithms);
 
-            if (allowedAlgorithms.Any())
-            {
-                return allowedAlgorithms.ToHashSet();
-            }
+            if (allowedAlgorithms.Any()) return allowedAlgorithms.ToHashSet();
 
-            throw new InvalidOperationException("Signing algorithms requirements for requested resources are not compatible.");
+            throw new InvalidOperationException(
+                "Signing algorithms requirements for requested resources are not compatible.");
         }
 
-        return new List<string>();
+        return [];
     }
 
     private static IEnumerable<T> IntersectLists<T>(IEnumerable<IEnumerable<T>> lists)

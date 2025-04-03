@@ -146,7 +146,7 @@ public class DefaultClientConfigurationValidator : IClientConfigurationValidator
 
                 if (!string.IsNullOrWhiteSpace(origin) && Uri.TryCreate(origin, UriKind.Absolute, out var uri))
                 {
-                    if (uri.AbsolutePath == "/" && !origin.EndsWith("/"))
+                    if (uri.AbsolutePath == "/" && !origin.EndsWith('/'))
                     {
                         fail = false;
                     }
@@ -215,7 +215,7 @@ public class DefaultClientConfigurationValidator : IClientConfigurationValidator
         {
             foreach (var grantType in context.Client.AllowedGrantTypes)
             {
-                if (!string.Equals(grantType, GrantType.Implicit))
+                if (!string.Equals(grantType, GrantType.Implicit, StringComparison.Ordinal))
                 {
                     if (context.Client.RequireClientSecret && context.Client.ClientSecrets.Count == 0)
                     {

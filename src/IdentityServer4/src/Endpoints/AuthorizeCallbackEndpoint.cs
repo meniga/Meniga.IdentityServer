@@ -1,7 +1,6 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System.Collections.Specialized;
 using System.Net;
 using IdentityServer4.Configuration;
 using IdentityServer4.Endpoints.Results;
@@ -19,8 +18,8 @@ namespace IdentityServer4.Endpoints;
 
 internal class AuthorizeCallbackEndpoint : AuthorizeEndpointBase
 {
-    private readonly IConsentMessageStore _consentResponseStore;
     private readonly IAuthorizationParametersMessageStore _authorizationParametersMessageStore;
+    private readonly IConsentMessageStore _consentResponseStore;
 
     public AuthorizeCallbackEndpoint(
         IEventService events,
@@ -53,7 +52,7 @@ internal class AuthorizeCallbackEndpoint : AuthorizeEndpointBase
         {
             var messageStoreId = parameters[Constants.AuthorizationParamsStore.MessageStoreIdParameterName];
             var entry = await _authorizationParametersMessageStore.ReadAsync(messageStoreId);
-            parameters = entry?.Data.FromFullDictionary() ?? new NameValueCollection();
+            parameters = entry?.Data.FromFullDictionary() ?? [];
 
             await _authorizationParametersMessageStore.DeleteAsync(messageStoreId);
         }
@@ -63,9 +62,7 @@ internal class AuthorizeCallbackEndpoint : AuthorizeEndpointBase
         var consent = await _consentResponseStore.ReadAsync(consentRequest.Id);
 
         if (consent != null && consent.Data == null)
-        {
             return await CreateErrorResultAsync("consent message is missing data");
-        }
 
         try
         {
@@ -77,10 +74,7 @@ internal class AuthorizeCallbackEndpoint : AuthorizeEndpointBase
         }
         finally
         {
-            if (consent != null)
-            {
-                await _consentResponseStore.DeleteAsync(consentRequest.Id);
-            }
+            if (consent != null) await _consentResponseStore.DeleteAsync(consentRequest.Id);
         }
     }
 }

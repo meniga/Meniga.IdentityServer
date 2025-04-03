@@ -54,7 +54,7 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiResource>> FindApiResourcesByNameAsync(IEnumerable<string> apiResourceNames)
     {
-        if (apiResourceNames == null) throw new ArgumentNullException(nameof(apiResourceNames));
+        ArgumentNullException.ThrowIfNull(apiResourceNames);
 
         var query = from a in _apiResources
             where apiResourceNames.Contains(a.Name)
@@ -65,7 +65,7 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
+        ArgumentNullException.ThrowIfNull(scopeNames);
 
         var identity = from i in _identityResources
             where scopeNames.Contains(i.Name)
@@ -77,10 +77,10 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
+        ArgumentNullException.ThrowIfNull(scopeNames);
 
         var query = from a in _apiResources
-            where a.Scopes.Any(x => scopeNames.Contains(x))
+            where a.Scopes.Any(scopeNames.Contains)
             select a;
 
         return Task.FromResult(query);
@@ -89,7 +89,7 @@ public class InMemoryResourcesStore : IResourceStore
     /// <inheritdoc/>
     public Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
     {
-        if (scopeNames == null) throw new ArgumentNullException(nameof(scopeNames));
+        ArgumentNullException.ThrowIfNull(scopeNames);
 
         var query =
             from x in _apiScopes

@@ -105,7 +105,7 @@ internal class TokenRequestValidator : ITokenRequestValidator
             Options = _options
         };
 
-        if (clientValidationResult == null) throw new ArgumentNullException(nameof(clientValidationResult));
+        ArgumentNullException.ThrowIfNull(clientValidationResult);
 
         _validatedRequest.SetClient(clientValidationResult.Client, clientValidationResult.Secret, clientValidationResult.Confirmation);
 
@@ -768,7 +768,7 @@ internal class TokenRequestValidator : ITokenRequestValidator
         return Valid();
     }
 
-    private bool ValidateCodeVerifierAgainstCodeChallenge(string codeVerifier, string codeChallenge, string codeChallengeMethod)
+    private static bool ValidateCodeVerifierAgainstCodeChallenge(string codeVerifier, string codeChallenge, string codeChallengeMethod)
     {
         if (codeChallengeMethod == OidcConstants.CodeChallengeMethods.Plain)
         {

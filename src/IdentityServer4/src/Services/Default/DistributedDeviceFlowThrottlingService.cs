@@ -46,7 +46,7 @@ public class DistributedDeviceFlowThrottlingService : IDeviceFlowThrottlingServi
     /// <exception cref="ArgumentNullException">deviceCode</exception>
     public async Task<bool> ShouldSlowDown(string deviceCode, DeviceCode details)
     {
-        if (deviceCode == null) throw new ArgumentNullException(nameof(deviceCode));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(deviceCode));
             
         var key = KeyPrefix + deviceCode;
         var options = new DistributedCacheEntryOptions {AbsoluteExpiration = _clock.GetUtcNow().AddSeconds(details.Lifetime)};

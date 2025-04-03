@@ -72,11 +72,7 @@ internal class AuthorizeResult : IEndpointResult
         // these are the conditions where we can send a response 
         // back directly to the client, otherwise we're only showing the error UI
         var isSafeError =
-            Response.Error == OidcConstants.AuthorizeErrors.AccessDenied ||
-            Response.Error == OidcConstants.AuthorizeErrors.AccountSelectionRequired ||
-            Response.Error == OidcConstants.AuthorizeErrors.LoginRequired ||
-            Response.Error == OidcConstants.AuthorizeErrors.ConsentRequired ||
-            Response.Error == OidcConstants.AuthorizeErrors.InteractionRequired;
+            Response.Error is OidcConstants.AuthorizeErrors.AccessDenied or OidcConstants.AuthorizeErrors.AccountSelectionRequired or OidcConstants.AuthorizeErrors.LoginRequired or OidcConstants.AuthorizeErrors.ConsentRequired or OidcConstants.AuthorizeErrors.InteractionRequired;
 
         if (isSafeError)
         {
@@ -104,8 +100,7 @@ internal class AuthorizeResult : IEndpointResult
 
     private Task RenderAuthorizeResponseAsync(HttpContext context)
     {
-        if (Response.Request.ResponseMode == OidcConstants.ResponseModes.Query ||
-            Response.Request.ResponseMode == OidcConstants.ResponseModes.Fragment)
+        if (Response.Request.ResponseMode is OidcConstants.ResponseModes.Query or OidcConstants.ResponseModes.Fragment)
         {
             context.Response.SetNoCache();
             context.Response.Redirect(BuildRedirectUri());
@@ -132,7 +127,7 @@ internal class AuthorizeResult : IEndpointResult
         var referrer_policy = "no-referrer";
         if (!context.Response.Headers.ContainsKey("Referrer-Policy"))
         {
-            context.Response.Headers.Add("Referrer-Policy", referrer_policy);
+            context.Response.Headers.Append("Referrer-Policy", referrer_policy);
         }
     }
 
@@ -150,7 +145,7 @@ internal class AuthorizeResult : IEndpointResult
             uri = uri.AddHashFragment(query);
         }
 
-        if (Response.IsError && !uri.Contains("#"))
+        if (Response.IsError && !uri.Contains('#'))
         {
             // https://tools.ietf.org/html/draft-bradley-oauth-open-redirector-00
             uri += "#_=_";

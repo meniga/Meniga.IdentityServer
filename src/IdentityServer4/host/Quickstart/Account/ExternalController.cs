@@ -50,7 +50,7 @@ namespace IdentityServerHost.Quickstart.UI
         [HttpGet]
         public IActionResult Challenge(string scheme, string returnUrl)
         {
-            if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
+            if (string.IsNullOrWhiteSpace(returnUrl)) returnUrl = "~/";
 
             // validate returnUrl - either it is a valid OIDC URL or back to a local page
             if (Url.IsLocalUrl(returnUrl) == false && _interaction.IsValidReturnUrl(returnUrl) == false)

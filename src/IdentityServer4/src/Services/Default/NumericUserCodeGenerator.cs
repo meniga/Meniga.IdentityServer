@@ -38,9 +38,9 @@ public class NumericUserCodeGenerator : IUserCodeGenerator
         return Task.FromResult(next.ToString());
     }
 
-    private int Next(int minValue, int maxValue)
+    private static int Next(int minValue, int maxValue)
     {
-        if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue));
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(minValue, maxValue);
         if (minValue == maxValue) return minValue;
         long diff = maxValue - minValue;
 

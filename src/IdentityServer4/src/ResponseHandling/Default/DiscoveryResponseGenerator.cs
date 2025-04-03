@@ -182,7 +182,7 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                     }
 
                     // domain based
-                    if (Options.MutualTls.DomainName.Contains("."))
+                    if (Options.MutualTls.DomainName.Contains('.'))
                     {
                         return $"https://{Options.MutualTls.DomainName}/{endpoint}";
                     }
@@ -311,7 +311,9 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
             entries.Add(OidcConstants.Discovery.IdTokenSigningAlgorithmsSupported, signingAlgorithms);
         }
 
+#pragma warning disable CA1861
         entries.Add(OidcConstants.Discovery.SubjectTypesSupported, new[] { "public" });
+#pragma warning restore CA1861
         entries.Add(OidcConstants.Discovery.CodeChallengeMethodsSupported, new[] { OidcConstants.CodeChallengeMethods.Plain, OidcConstants.CodeChallengeMethods.Sha256 });
 
         if (Options.Endpoints.EnableAuthorizeEndpoint)
@@ -332,9 +334,9 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
         // custom entries
         if (!Options.Discovery.CustomEntries.IsNullOrEmpty())
         {
-            foreach ((var key, var value) in Options.Discovery.CustomEntries)
+            foreach (var (key, value) in Options.Discovery.CustomEntries)
             {
-                if (entries.ContainsKey(key))
+                if (!entries.TryAdd(key, value))
                 {
                     Logger.LogError("Discovery custom entry {key} cannot be added, because it already exists.", key);
                 }
@@ -342,14 +344,12 @@ public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
                 {
                     if (value is string customValueString)
                     {
-                        if (customValueString.StartsWith("~/") && Options.Discovery.ExpandRelativePathsInCustomEntries)
+                        if (customValueString.StartsWith("~/", StringComparison.Ordinal) && Options.Discovery.ExpandRelativePathsInCustomEntries)
                         {
-                            entries.Add(key, baseUrl + customValueString.Substring(2));
+                            entries.Add(key, baseUrl + customValueString[2..]);
                             continue;
                         }
                     }
-
-                    entries.Add(key, value);
                 }
             }
         }

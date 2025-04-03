@@ -10,7 +10,7 @@ namespace IdentityServer4.Endpoints.Results;
 
 internal class UserInfoResult : IEndpointResult
 {
-    public Dictionary<string, object> Claims;
+    public readonly Dictionary<string, object> Claims;
 
     public UserInfoResult(Dictionary<string, object> claims)
     {

@@ -153,7 +153,7 @@ namespace IdentityServerHost.Quickstart.UI
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    else if (string.IsNullOrEmpty(model.ReturnUrl))
+                    else if (string.IsNullOrWhiteSpace(model.ReturnUrl))
                     {
                         return Redirect("~/");
                     }
@@ -336,7 +336,7 @@ namespace IdentityServerHost.Quickstart.UI
             {
                 AutomaticRedirectAfterSignOut = AccountOptions.AutomaticRedirectAfterSignOut,
                 PostLogoutRedirectUri = logout?.PostLogoutRedirectUri,
-                ClientName = string.IsNullOrEmpty(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
+                ClientName = string.IsNullOrWhiteSpace(logout?.ClientName) ? logout?.ClientId : logout?.ClientName,
                 SignOutIframeUrl = logout?.SignOutIFrameUrl,
                 LogoutId = logoutId
             };

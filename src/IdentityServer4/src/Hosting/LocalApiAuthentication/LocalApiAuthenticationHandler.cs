@@ -50,14 +50,14 @@ public class LocalApiAuthenticationHandler : AuthenticationHandler<LocalApiAuthe
 
         string authorization = Request.Headers["Authorization"];
 
-        if (string.IsNullOrEmpty(authorization))
+        if (string.IsNullOrWhiteSpace(authorization))
         {
             return AuthenticateResult.NoResult();
         }
 
         if (authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
         {
-            token = authorization.Substring("Bearer ".Length).Trim();
+            token = authorization["Bearer ".Length..].Trim();
         }
 
         if (string.IsNullOrEmpty(token))

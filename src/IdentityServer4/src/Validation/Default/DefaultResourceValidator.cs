@@ -33,7 +33,7 @@ public class DefaultResourceValidator : IResourceValidator
     /// <inheritdoc/>
     public virtual async Task<ResourceValidationResult> ValidateRequestedResourcesAsync(ResourceValidationRequest request)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
+        ArgumentNullException.ThrowIfNull(request);
 
         var parsedScopesResult = _scopeParser.ParseScopeValues(request.Scopes);
 

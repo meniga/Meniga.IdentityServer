@@ -2,21 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4.Models;
 using IdentityServer4.Extensions;
+using IdentityServer4.Models;
+using IdentityServer4.Stores;
 using IdentityServer4.Validation;
 using Microsoft.Extensions.Logging;
-using IdentityServer4.Stores;
-using System.Collections.Specialized;
 
 namespace IdentityServer4.Services;
 
 internal class OidcReturnUrlParser : IReturnUrlParser
 {
-    private readonly IAuthorizeRequestValidator _validator;
-    private readonly IUserSession _userSession;
-    private readonly ILogger _logger;
     private readonly IAuthorizationParametersMessageStore _authorizationParametersMessageStore;
+    private readonly ILogger _logger;
+    private readonly IUserSession _userSession;
+    private readonly IAuthorizeRequestValidator _validator;
 
     public OidcReturnUrlParser(
         IAuthorizeRequestValidator validator,
@@ -39,7 +38,7 @@ internal class OidcReturnUrlParser : IReturnUrlParser
             {
                 var messageStoreId = parameters[Constants.AuthorizationParamsStore.MessageStoreIdParameterName];
                 var entry = await _authorizationParametersMessageStore.ReadAsync(messageStoreId);
-                parameters = entry?.Data.FromFullDictionary() ?? new NameValueCollection();
+                parameters = entry?.Data.FromFullDictionary() ?? [];
             }
 
             var user = await _userSession.GetUserAsync();
@@ -60,10 +59,7 @@ internal class OidcReturnUrlParser : IReturnUrlParser
         if (returnUrl.IsLocalUrl())
         {
             var index = returnUrl.IndexOf('?');
-            if (index >= 0)
-            {
-                returnUrl = returnUrl.Substring(0, index);
-            }
+            if (index >= 0) returnUrl = returnUrl[..index];
 
             if (returnUrl.EndsWith(Constants.ProtocolRoutePaths.Authorize, StringComparison.Ordinal) ||
                 returnUrl.EndsWith(Constants.ProtocolRoutePaths.AuthorizeCallback, StringComparison.Ordinal))

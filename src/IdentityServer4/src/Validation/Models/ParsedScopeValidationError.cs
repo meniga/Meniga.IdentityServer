@@ -16,15 +16,9 @@ public class ParsedScopeValidationError
     /// <param name="error"></param>
     public ParsedScopeValidationError(string rawValue, string error)
     {
-        if (string.IsNullOrWhiteSpace(rawValue))
-        {
-            throw new ArgumentNullException(nameof(rawValue));
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(rawValue));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(error));
 
-        if (string.IsNullOrWhiteSpace(error))
-        {
-            throw new ArgumentNullException(nameof(error));
-        }
 
         RawValue = rawValue;
         Error = error;

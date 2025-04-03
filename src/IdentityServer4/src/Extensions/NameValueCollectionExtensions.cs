@@ -19,7 +19,7 @@ internal static class NameValueCollectionExtensions
     {
         var nvc = new NameValueCollection();
 
-        foreach ((var key, var strings) in source)
+        foreach (var (key, strings) in source)
         {
             foreach (var value in strings)
             {
@@ -127,7 +127,7 @@ internal static class NameValueCollectionExtensions
 
     internal static string ConvertFormUrlEncodedSpacesToUrlEncodedSpaces(string str)
     {
-        if ((str != null) && (str.IndexOf('+') >= 0))
+        if ((str != null) && (str.Contains('+')))
         {
             str = str.Replace("+", "%20");
         }
@@ -149,13 +149,13 @@ internal static class NameValueCollectionExtensions
         }
         else
         {
-            builder.Append("&");
+            builder.Append('&');
         }
 
         builder.Append(encodedName);
-        if (!string.IsNullOrEmpty(encodedValue))
+        if (!string.IsNullOrWhiteSpace(encodedValue))
         {
-            builder.Append("=");
+            builder.Append('=');
             builder.Append(encodedValue);
         }
         return first;

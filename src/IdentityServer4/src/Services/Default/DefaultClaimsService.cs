@@ -102,12 +102,12 @@ public class DefaultClaimsService : IClaimsService
     /// Returns claims for an access token.
     /// </summary>
     /// <param name="subject">The subject.</param>
-    /// <param name="resourceResult">The validated resource result</param>
+    /// <param name="resources">The validated resource result</param>
     /// <param name="request">The raw request.</param>
     /// <returns>
     /// Claims for the access token
     /// </returns>
-    public virtual async Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resourceResult, ValidatedRequest request)
+    public virtual async Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resources, ValidatedRequest request)
     {
         Logger.LogDebug("Getting claims for access token for client: {clientId}", request.Client.ClientId);
 
@@ -117,7 +117,7 @@ public class DefaultClaimsService : IClaimsService
         };
 
         // log if client ID is overwritten
-        if (!string.Equals(request.ClientId, request.Client.ClientId))
+        if (!string.Equals(request.ClientId, request.Client.ClientId, StringComparison.Ordinal))
         {
             Logger.LogDebug("Client {clientId} is impersonating {impersonatedClientId}", request.Client.ClientId, request.ClientId);
         }
@@ -144,7 +144,7 @@ public class DefaultClaimsService : IClaimsService
         // add scopes (filter offline_access)
         // we use the ScopeValues collection rather than the Resources.Scopes because we support dynamic scope values 
         // from the request, so this issues those in the token.
-        foreach (var scope in resourceResult.RawScopeValues.Where(x => x != IdentityServerConstants.StandardScopes.OfflineAccess))
+        foreach (var scope in resources.RawScopeValues.Where(x => x != IdentityServerConstants.StandardScopes.OfflineAccess))
         {
             outputClaims.Add(new Claim(JwtClaimTypes.Scope, scope));
         }
@@ -152,7 +152,7 @@ public class DefaultClaimsService : IClaimsService
         // a user is involved
         if (subject != null)
         {
-            if (resourceResult.Resources.OfflineAccess)
+            if (resources.Resources.OfflineAccess)
             {
                 outputClaims.Add(new Claim(JwtClaimTypes.Scope, IdentityServerConstants.StandardScopes.OfflineAccess));
             }
@@ -164,7 +164,7 @@ public class DefaultClaimsService : IClaimsService
 
             // fetch all resource claims that need to go into the access token
             var additionalClaimTypes = new List<string>();
-            foreach (var api in resourceResult.Resources.ApiResources)
+            foreach (var api in resources.Resources.ApiResources)
             {
                 // add claims configured on api resource
                 if (api.UserClaims != null)
@@ -176,7 +176,7 @@ public class DefaultClaimsService : IClaimsService
                 }
             }
 
-            foreach(var scope in resourceResult.Resources.ApiScopes)
+            foreach(var scope in resources.Resources.ApiScopes)
             {
                 // add claims configured on scopes
                 if (scope.UserClaims != null)
@@ -197,7 +197,7 @@ public class DefaultClaimsService : IClaimsService
                 IdentityServerConstants.ProfileDataCallers.ClaimsProviderAccessToken,
                 additionalClaimTypes.Distinct())
             {
-                RequestedResources = resourceResult,
+                RequestedResources = resources,
                 ValidatedRequest = request
             };
 

@@ -62,8 +62,8 @@ public class DefaultConsentService : IConsentService
     /// </exception>
     public virtual async Task<bool> RequiresConsentAsync(ClaimsPrincipal subject, Client client, IEnumerable<ParsedScopeValue> parsedScopes)
     {
-        if (client == null) throw new ArgumentNullException(nameof(client));
-        if (subject == null) throw new ArgumentNullException(nameof(subject));
+        ArgumentNullException.ThrowIfNull(client);
+        ArgumentNullException.ThrowIfNull(subject);
 
         if (!client.RequireConsent)
         {
@@ -117,7 +117,7 @@ public class DefaultConsentService : IConsentService
         if (consent.Scopes != null)
         {
             var intersect = scopes.Intersect(consent.Scopes);
-            var different = scopes.Count() != intersect.Count();
+            var different = scopes.Length != intersect.Count();
 
             if (different)
             {
@@ -150,8 +150,8 @@ public class DefaultConsentService : IConsentService
     /// </exception>
     public virtual Task UpdateConsentAsync(ClaimsPrincipal subject, Client client, IEnumerable<ParsedScopeValue> parsedScopes)
     {
-        if (client == null) throw new ArgumentNullException(nameof(client));
-        if (subject == null) throw new ArgumentNullException(nameof(subject));
+        ArgumentNullException.ThrowIfNull(client);
+        ArgumentNullException.ThrowIfNull(subject);
 
         if (client.AllowRememberConsent)
         {

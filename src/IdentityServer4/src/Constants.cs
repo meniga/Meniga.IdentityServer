@@ -121,7 +121,7 @@ internal static class Constants
         public static readonly string[] All = [HomeRealm, Tenant];
     }
 
-    public static Dictionary<string, int> ProtectedResourceErrorStatusCodes = new()
+    public static readonly Dictionary<string, int> ProtectedResourceErrorStatusCodes = new()
     {
         { OidcConstants.ProtectedResourceErrors.InvalidToken,      401 },
         { OidcConstants.ProtectedResourceErrors.ExpiredToken,      401 },
@@ -254,7 +254,7 @@ internal static class Constants
         public const string AccessToken  = "access_token";
     }
 
-    public static List<string> SupportedTokenTypeHints =
+    public static readonly List<string> SupportedTokenTypeHints =
     [
         TokenTypeHints.RefreshToken,
         TokenTypeHints.AccessToken

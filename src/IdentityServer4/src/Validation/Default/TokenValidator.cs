@@ -125,7 +125,7 @@ internal class TokenValidator : ITokenValidator
 
         TokenValidationResult result;
 
-        if (token.Contains("."))
+        if (token.Contains('.'))
         {
             if (token.Length > _options.InputLengthRestrictions.Jwt)
             {
@@ -271,7 +271,7 @@ internal class TokenValidator : ITokenValidator
                 if (_options.AccessTokenJwtType.IsPresent())
                 {
                     var type = jwtSecurityToken.Header.Typ;
-                    if (!string.Equals(type, _options.AccessTokenJwtType))
+                    if (!string.Equals(type, _options.AccessTokenJwtType, StringComparison.Ordinal))
                     {
                         return new TokenValidationResult
                         {
@@ -310,7 +310,7 @@ internal class TokenValidator : ITokenValidator
             {
                 foreach (var scope in scopes)
                 {
-                    if (scope.Value.Contains(" "))
+                    if (scope.Value.Contains(' '))
                     {
                         claims.Remove(scope);
                             
@@ -387,7 +387,7 @@ internal class TokenValidator : ITokenValidator
         };
     }
 
-    private IEnumerable<Claim> ReferenceTokenToClaims(Token token)
+    private static IEnumerable<Claim> ReferenceTokenToClaims(Token token)
     {
         var claims = new List<Claim>
         {
@@ -421,7 +421,7 @@ internal class TokenValidator : ITokenValidator
         }
     }
 
-    private TokenValidationResult Invalid(string error)
+    private static TokenValidationResult Invalid(string error)
     {
         return new TokenValidationResult
         {
