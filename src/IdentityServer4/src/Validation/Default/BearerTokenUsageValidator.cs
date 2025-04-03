@@ -64,9 +64,9 @@ internal class BearerTokenUsageValidator
         if (authorizationHeader.IsPresent())
         {
             var header = authorizationHeader.Trim();
-            if (header.StartsWith(OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer))
+            if (header.StartsWith(OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer, StringComparison.Ordinal))
             {
-                var value = header.Substring(OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer.Length).Trim();
+                var value = header[OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer.Length..].Trim();
                 if (value.IsPresent())
                 {
                     return new BearerTokenUsageValidationResult
@@ -91,7 +91,7 @@ internal class BearerTokenUsageValidator
     /// </summary>
     /// <param name="context">The context.</param>
     /// <returns></returns>
-    public async Task<BearerTokenUsageValidationResult> ValidatePostBodyAsync(HttpContext context)
+    public static async Task<BearerTokenUsageValidationResult> ValidatePostBodyAsync(HttpContext context)
     {
         var token = (await context.Request.ReadFormAsync())["access_token"].FirstOrDefault();
         if (token.IsPresent())

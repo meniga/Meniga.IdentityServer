@@ -137,7 +137,7 @@ public class GrantValidationResult : ValidationResult
     /// </summary>
     public Dictionary<string, object> CustomResponse { get; set; } = [];
 
-    private string ConvertTokenErrorEnumToString(TokenRequestErrors error)
+    private static string ConvertTokenErrorEnumToString(TokenRequestErrors error)
     {
         return error switch
         {

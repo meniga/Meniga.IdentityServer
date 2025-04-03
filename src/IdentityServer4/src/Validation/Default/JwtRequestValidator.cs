@@ -26,7 +26,7 @@ public class JwtRequestValidator
     /// <summary>
     /// JWT handler
     /// </summary>
-    protected JwtSecurityTokenHandler Handler = new()
+    protected readonly JwtSecurityTokenHandler Handler = new()
     {
         MapInboundClaims = false
     };
@@ -85,8 +85,8 @@ public class JwtRequestValidator
     /// <returns></returns>
     public virtual async Task<JwtRequestValidationResult> ValidateAsync(Client client, string jwtTokenString)
     {
-        if (client == null) throw new ArgumentNullException(nameof(client));
-        if (string.IsNullOrWhiteSpace(jwtTokenString)) throw new ArgumentNullException(nameof(jwtTokenString));
+        ArgumentNullException.ThrowIfNull(client);
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(jwtTokenString));
 
         var fail = new JwtRequestValidationResult { IsError = true };
 

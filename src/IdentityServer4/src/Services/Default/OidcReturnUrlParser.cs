@@ -59,7 +59,7 @@ internal class OidcReturnUrlParser : IReturnUrlParser
         if (returnUrl.IsLocalUrl())
         {
             var index = returnUrl.IndexOf('?');
-            if (index >= 0) returnUrl = returnUrl.Substring(0, index);
+            if (index >= 0) returnUrl = returnUrl[..index];
 
             if (returnUrl.EndsWith(Constants.ProtocolRoutePaths.Authorize, StringComparison.Ordinal) ||
                 returnUrl.EndsWith(Constants.ProtocolRoutePaths.AuthorizeCallback, StringComparison.Ordinal))

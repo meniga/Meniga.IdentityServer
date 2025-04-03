@@ -74,7 +74,7 @@ public static class AuthenticationPropertiesExtensions
     /// <param name="clientId"></param>
     public static void AddClientId(this AuthenticationProperties properties, string clientId)
     {
-        if (clientId == null) throw new ArgumentNullException(nameof(clientId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(clientId, nameof(clientId));
 
         var clients = properties.GetClientList();
         if (!clients.Contains(clientId))

@@ -78,24 +78,24 @@ public class TokenResponseGenerator : ITokenResponseGenerator
     /// <summary>
     /// Processes the response.
     /// </summary>
-    /// <param name="request">The request.</param>
+    /// <param name="validationResult">The request.</param>
     /// <returns></returns>
-    public virtual Task<TokenResponse> ProcessAsync(TokenRequestValidationResult request)
+    public virtual Task<TokenResponse> ProcessAsync(TokenRequestValidationResult validationResult)
     {
-        switch (request.ValidatedRequest.GrantType)
+        switch (validationResult.ValidatedRequest.GrantType)
         {
             case OidcConstants.GrantTypes.ClientCredentials:
-                return ProcessClientCredentialsRequestAsync(request);
+                return ProcessClientCredentialsRequestAsync(validationResult);
             case OidcConstants.GrantTypes.Password:
-                return ProcessPasswordRequestAsync(request);
+                return ProcessPasswordRequestAsync(validationResult);
             case OidcConstants.GrantTypes.AuthorizationCode:
-                return ProcessAuthorizationCodeRequestAsync(request);
+                return ProcessAuthorizationCodeRequestAsync(validationResult);
             case OidcConstants.GrantTypes.RefreshToken:
-                return ProcessRefreshTokenRequestAsync(request);
+                return ProcessRefreshTokenRequestAsync(validationResult);
             case OidcConstants.GrantTypes.DeviceCode:
-                return ProcessDeviceCodeRequestAsync(request);
+                return ProcessDeviceCodeRequestAsync(validationResult);
             default:
-                return ProcessExtensionGrantRequestAsync(request);
+                return ProcessExtensionGrantRequestAsync(validationResult);
         }
     }
 
@@ -326,7 +326,7 @@ public class TokenResponseGenerator : ITokenResponseGenerator
     /// <returns></returns>
     protected virtual async Task<TokenResponse> ProcessTokenRequestAsync(TokenRequestValidationResult validationResult)
     {
-        (var accessToken, var refreshToken) = await CreateAccessTokenAsync(validationResult.ValidatedRequest);
+        var (accessToken, refreshToken) = await CreateAccessTokenAsync(validationResult.ValidatedRequest);
         var response = new TokenResponse
         {
             AccessToken = accessToken,

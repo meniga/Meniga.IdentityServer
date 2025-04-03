@@ -58,9 +58,9 @@ internal class ConfigureInternalCookieOptions : IConfigureNamedOptions<CookieAut
     {
         if (url.IsLocalUrl())
         {
-            if (url.StartsWith("~/"))
+            if (url.StartsWith("~/", StringComparison.Ordinal))
             {
-                url = url.Substring(1);
+                url = url[1..];
             }
 
             return url;

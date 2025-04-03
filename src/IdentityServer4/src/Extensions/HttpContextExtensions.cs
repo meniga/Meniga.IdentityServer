@@ -25,8 +25,8 @@ public static class HttpContextExtensions
 
     public static void SetIdentityServerOrigin(this HttpContext context, string value)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
-        if (value == null) throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(value);
 
         var split = value.Split(["://"], StringSplitOptions.RemoveEmptyEntries);
 
@@ -37,7 +37,7 @@ public static class HttpContextExtensions
 
     public static void SetIdentityServerBasePath(this HttpContext context, string value)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
 
         context.Items[Constants.EnvironmentKeys.IdentityServerBasePath] = value;
     }
@@ -49,12 +49,12 @@ public static class HttpContextExtensions
             
         if (options.MutualTls.Enabled && options.MutualTls.DomainName.IsPresent())
         {
-            if (!options.MutualTls.DomainName.Contains("."))
+            if (!options.MutualTls.DomainName.Contains('.'))
             {
                 if (request.Host.Value.StartsWith(options.MutualTls.DomainName, StringComparison.OrdinalIgnoreCase))
                 {
                     return request.Scheme + "://" +
-                           request.Host.Value.Substring(options.MutualTls.DomainName.Length + 1);
+                           request.Host.Value[(options.MutualTls.DomainName.Length + 1)..];
                 }
             }
         }
@@ -65,7 +65,7 @@ public static class HttpContextExtensions
 
     internal static void SetSignOutCalled(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
         context.Items[Constants.EnvironmentKeys.SignOutCalled] = "true";
     }
 
@@ -118,7 +118,7 @@ public static class HttpContextExtensions
             return null;
         }
 
-        if (path.StartsWith("~/")) path = path.Substring(1);
+        if (path.StartsWith("~/", StringComparison.Ordinal)) path = path[1..];
         path = context.GetIdentityServerBaseUrl().EnsureTrailingSlash() + path.RemoveLeadingSlash();
         return path;
     }
@@ -131,7 +131,7 @@ public static class HttpContextExtensions
     /// <exception cref="System.ArgumentNullException">context</exception>
     public static string GetIdentityServerIssuerUri(this HttpContext context)
     {
-        if (context == null) throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(context);
 
         // if they've explicitly configured a URI then use it,
         // otherwise dynamically calculate it
@@ -140,7 +140,7 @@ public static class HttpContextExtensions
         if (uri.IsMissing())
         {
             uri = context.GetIdentityServerOrigin() + context.GetIdentityServerBasePath();
-            if (uri.EndsWith("/")) uri = uri.Substring(0, uri.Length - 1);
+            if (uri.EndsWith('/')) uri = uri[..^1];
             if (options.LowerCaseIssuerUri)
             {
                 uri = uri.ToLowerInvariant();

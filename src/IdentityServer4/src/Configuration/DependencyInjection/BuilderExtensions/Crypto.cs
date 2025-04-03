@@ -72,7 +72,7 @@ public static class IdentityServerBuilderExtensionsCrypto
     /// <exception cref="InvalidOperationException">X509 certificate does not have a private key.</exception>
     public static IIdentityServerBuilder AddSigningCredential(this IIdentityServerBuilder builder, X509Certificate2 certificate, string signingAlgorithm = SecurityAlgorithms.RsaSha256)
     {
-        if (certificate == null) throw new ArgumentNullException(nameof(certificate));
+        ArgumentNullException.ThrowIfNull(certificate);
 
         if (!certificate.HasPrivateKey)
         {
@@ -257,7 +257,7 @@ public static class IdentityServerBuilderExtensionsCrypto
         X509Certificate2 certificate,
         string signingAlgorithm = SecurityAlgorithms.RsaSha256)
     {
-        if (certificate == null) throw new ArgumentNullException(nameof(certificate));
+        ArgumentNullException.ThrowIfNull(certificate);
 
         // add signing algorithm name to key ID to allow using the same key for two different algorithms (e.g. RS256 and PS56);
         var key = new X509SecurityKey(certificate);

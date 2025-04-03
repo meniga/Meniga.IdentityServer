@@ -58,10 +58,10 @@ public class DefaultRefreshTokenService : IRefreshTokenService
     /// <summary>
     /// Validates a refresh token
     /// </summary>
-    /// <param name="tokenHandle">The token handle.</param>
+    /// <param name="token">The token handle.</param>
     /// <param name="client">The client.</param>
     /// <returns></returns>
-    public virtual async Task<TokenValidationResult> ValidateRefreshTokenAsync(string tokenHandle, Client client)
+    public virtual async Task<TokenValidationResult> ValidateRefreshTokenAsync(string token, Client client)
     {
         var invalidGrant = new TokenValidationResult
         {
@@ -73,7 +73,7 @@ public class DefaultRefreshTokenService : IRefreshTokenService
         /////////////////////////////////////////////
         // check if refresh token is valid
         /////////////////////////////////////////////
-        var refreshToken = await RefreshTokenStore.GetRefreshTokenAsync(tokenHandle);
+        var refreshToken = await RefreshTokenStore.GetRefreshTokenAsync(token);
         if (refreshToken == null)
         {
             Logger.LogWarning("Invalid refresh token");

@@ -25,7 +25,7 @@ public class DefaultScopeParser : IScopeParser
     /// <inheritdoc/>
     public ParsedScopesResult ParseScopeValues(IEnumerable<string> scopeValues)
     {
-        if (scopeValues == null) throw new ArgumentNullException(nameof(scopeValues));
+        ArgumentNullException.ThrowIfNull(scopeValues);
 
         var result = new ParsedScopesResult();
 
@@ -33,12 +33,12 @@ public class DefaultScopeParser : IScopeParser
         {
             var ctx = new ParseScopeContext(scopeValue);
             ParseScopeValue(ctx);
-                
+
             if (ctx.Succeeded)
             {
-                var parsedScope = ctx.ParsedName != null ?
-                    new ParsedScopeValue(ctx.RawValue, ctx.ParsedName, ctx.ParsedParameter) :
-                    new ParsedScopeValue(ctx.RawValue);
+                var parsedScope = ctx.ParsedName != null
+                    ? new ParsedScopeValue(ctx.RawValue, ctx.ParsedName, ctx.ParsedParameter)
+                    : new ParsedScopeValue(ctx.RawValue);
 
                 result.ParsedScopes.Add(parsedScope);
             }
@@ -89,7 +89,7 @@ public class DefaultScopeParser : IScopeParser
         /// The error encountered parsing the scope.
         /// </summary>
         public string Error { get; private set; }
-            
+
         /// <summary>
         /// Indicates if the scope should be excluded from the parsed results.
         /// </summary>
@@ -116,14 +116,9 @@ public class DefaultScopeParser : IScopeParser
         /// <param name="parsedParameter"></param>
         public void SetParsedValues(string parsedName, string parsedParameter)
         {
-            if (string.IsNullOrWhiteSpace(parsedName))
-            {
-                throw new ArgumentNullException(nameof(parsedName));
-            }
-            if (string.IsNullOrWhiteSpace(parsedParameter))
-            {
-                throw new ArgumentNullException(nameof(parsedParameter));
-            }
+            ArgumentException.ThrowIfNullOrWhiteSpace(nameof(parsedName));
+            ArgumentException.ThrowIfNullOrWhiteSpace(nameof(parsedParameter));
+
 
             ParsedName = parsedName;
             ParsedParameter = parsedParameter;

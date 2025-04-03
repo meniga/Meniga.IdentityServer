@@ -60,7 +60,7 @@ public class CachingResourceStore<T> : IResourceStore
         _logger = logger;
     }
 
-    private string GetKey(IEnumerable<string> names)
+    private static string GetKey(IEnumerable<string> names)
     {
         if (names == null || !names.Any()) return string.Empty;
         return names.OrderBy(x => x).Aggregate((x, y) => x + "," + y);
@@ -91,24 +91,24 @@ public class CachingResourceStore<T> : IResourceStore
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> names)
+    public async Task<IEnumerable<IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
-        var key = GetKey(names);
+        var key = GetKey(scopeNames);
 
         var identities = await _identityCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration, () => _inner.FindIdentityResourcesByScopeNameAsync(names),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindIdentityResourcesByScopeNameAsync(scopeNames),
             _logger);
 
         return identities;
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> names)
+    public async Task<IEnumerable<ApiResource>> FindApiResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
     {
-        var key = GetKey(names);
+        var key = GetKey(scopeNames);
 
         var apis = await _apiByScopeCache.GetAsync(key,
-            _options.Caching.ResourceStoreExpiration, () => _inner.FindApiResourcesByScopeNameAsync(names),
+            _options.Caching.ResourceStoreExpiration, () => _inner.FindApiResourcesByScopeNameAsync(scopeNames),
             _logger);
 
         return apis;

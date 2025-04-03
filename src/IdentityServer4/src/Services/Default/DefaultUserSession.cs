@@ -150,8 +150,8 @@ public class DefaultUserSession : IUserSession
     /// </exception>
     public virtual async Task<string> CreateSessionIdAsync(ClaimsPrincipal principal, AuthenticationProperties properties)
     {
-        if (principal == null) throw new ArgumentNullException(nameof(principal));
-        if (properties == null) throw new ArgumentNullException(nameof(properties));
+        ArgumentNullException.ThrowIfNull(principal);
+        ArgumentNullException.ThrowIfNull(properties);
 
         var currentSubjectId = (await GetUserAsync())?.GetSubjectId();
         var newSubjectId = principal.GetSubjectId();
@@ -274,7 +274,7 @@ public class DefaultUserSession : IUserSession
     /// <exception cref="ArgumentNullException">clientId</exception>
     public virtual async Task AddClientIdAsync(string clientId)
     {
-        if (clientId == null) throw new ArgumentNullException(nameof(clientId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(clientId));
 
         await AuthenticateAsync();
         if (Properties != null)

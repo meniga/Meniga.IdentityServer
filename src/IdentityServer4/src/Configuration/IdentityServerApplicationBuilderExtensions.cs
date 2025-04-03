@@ -49,7 +49,7 @@ public static class IdentityServerApplicationBuilderExtensions
     internal static void Validate(this IApplicationBuilder app)
     {
         var loggerFactory = app.ApplicationServices.GetService(typeof(ILoggerFactory)) as ILoggerFactory;
-        if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
+        ArgumentNullException.ThrowIfNull(loggerFactory, nameof(loggerFactory));
 
         var logger = loggerFactory.CreateLogger("IdentityServer4.Startup");
         logger.LogInformation("Starting IdentityServer4 version {version}", typeof(IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);

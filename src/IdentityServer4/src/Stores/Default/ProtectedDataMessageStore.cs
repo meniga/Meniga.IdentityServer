@@ -40,15 +40,15 @@ public class ProtectedDataMessageStore<TModel> : IMessageStore<TModel>
     }
 
     /// <inheritdoc />
-    public virtual Task<Message<TModel>> ReadAsync(string value)
+    public virtual Task<Message<TModel>> ReadAsync(string id)
     {
         Message<TModel> result = null;
 
-        if (!string.IsNullOrWhiteSpace(value))
+        if (!string.IsNullOrWhiteSpace(id))
         {
             try
             {
-                var bytes = Base64Url.Decode(value);
+                var bytes = Base64Url.Decode(id);
                 bytes = Protector.Unprotect(bytes);
                 var json = Encoding.UTF8.GetString(bytes);
                 result = ObjectSerializer.FromString<Message<TModel>>(json);

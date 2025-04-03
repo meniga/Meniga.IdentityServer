@@ -54,12 +54,12 @@ internal class DeviceAuthorizationRequestValidator : IDeviceAuthorizationRequest
         return Valid(request);
     }
 
-    private DeviceAuthorizationRequestValidationResult Valid(ValidatedDeviceAuthorizationRequest request)
+    private static DeviceAuthorizationRequestValidationResult Valid(ValidatedDeviceAuthorizationRequest request)
     {
         return new DeviceAuthorizationRequestValidationResult(request);
     }
 
-    private DeviceAuthorizationRequestValidationResult Invalid(ValidatedDeviceAuthorizationRequest request, string error = OidcConstants.AuthorizeErrors.InvalidRequest, string description = null)
+    private static DeviceAuthorizationRequestValidationResult Invalid(ValidatedDeviceAuthorizationRequest request, string error = OidcConstants.AuthorizeErrors.InvalidRequest, string description = null)
     {
         return new DeviceAuthorizationRequestValidationResult(request, error, description);
     }
@@ -81,7 +81,7 @@ internal class DeviceAuthorizationRequestValidator : IDeviceAuthorizationRequest
         //////////////////////////////////////////////////////////
         // set client & secret
         //////////////////////////////////////////////////////////
-        if (clientValidationResult == null) throw new ArgumentNullException(nameof(clientValidationResult));
+        ArgumentNullException.ThrowIfNull(clientValidationResult);
         request.SetClient(clientValidationResult.Client, clientValidationResult.Secret);
 
         //////////////////////////////////////////////////////////

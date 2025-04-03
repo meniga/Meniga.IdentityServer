@@ -59,7 +59,7 @@ public class DefaultEventService : IEventService
     /// <exception cref="System.ArgumentNullException">evt</exception>
     public async Task RaiseAsync(Event evt)
     {
-        if (evt == null) throw new ArgumentNullException(nameof(evt));
+        ArgumentNullException.ThrowIfNull(evt);
 
         if (CanRaiseEvent(evt))
         {
@@ -112,11 +112,11 @@ public class DefaultEventService : IEventService
     {
         evt.ActivityId = Context.HttpContext.TraceIdentifier;
         evt.TimeStamp = Clock.GetUtcNow().UtcDateTime;
-        evt.ProcessId = Process.GetCurrentProcess().Id;
+        evt.ProcessId = Environment.ProcessId;
 
         if (Context.HttpContext.Connection.LocalIpAddress != null)
         {
-            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress.ToString() + ":" + Context.HttpContext.Connection.LocalPort;
+            evt.LocalIpAddress = Context.HttpContext.Connection.LocalIpAddress + ":" + Context.HttpContext.Connection.LocalPort;
         }
         else
         {

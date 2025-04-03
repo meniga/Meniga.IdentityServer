@@ -27,7 +27,7 @@ public class DefaultCache<T> : ICache<T>
         _cache = cache;
     }
 
-    private string GetKey(string key)
+    private static string GetKey(string key)
     {
         return typeof(T).FullName + KeySeparator + key;
     }

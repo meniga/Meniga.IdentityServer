@@ -30,7 +30,7 @@ public class DefaultUserConsentStore : DefaultGrantStore<Consent>, IUserConsentS
     {
     }
 
-    private string GetConsentKey(string subjectId, string clientId)
+    private static string GetConsentKey(string subjectId, string clientId)
     {
         return clientId + "|" + subjectId;
     }

@@ -19,7 +19,7 @@ public class StrictRedirectUriValidator : IRedirectUriValidator
     /// <param name="uris">The uris.</param>
     /// <param name="requestedUri">The requested URI.</param>
     /// <returns></returns>
-    protected bool StringCollectionContainsString(IEnumerable<string> uris, string requestedUri)
+    protected static bool StringCollectionContainsString(IEnumerable<string> uris, string requestedUri)
     {
         if (uris.IsNullOrEmpty()) return false;
 

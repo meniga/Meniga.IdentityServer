@@ -36,7 +36,7 @@ public static class IdentityServerConstants
 
     public const string JwtRequestClientKey = "idsrv.jwtrequesturi.client";
 
-    public static IEnumerable<string> SupportedSigningAlgorithms =
+    public static readonly IEnumerable<string> SupportedSigningAlgorithms =
     [
         SecurityAlgorithms.RsaSha256,
         SecurityAlgorithms.RsaSha384,

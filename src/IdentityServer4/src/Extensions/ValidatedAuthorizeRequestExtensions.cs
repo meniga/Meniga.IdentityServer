@@ -22,12 +22,9 @@ public static class ValidatedAuthorizeRequestExtensions
     public static string GetPrefixedAcrValue(this ValidatedAuthorizeRequest request, string prefix)
     {
         var value = request.AuthenticationContextReferenceClasses
-            .FirstOrDefault(x => x.StartsWith(prefix));
+            .FirstOrDefault(x => x.StartsWith(prefix, StringComparison.Ordinal));
 
-        if (value != null)
-        {
-            value = value.Substring(prefix.Length);
-        }
+        value = value?[prefix.Length..];
 
         return value;
     }
@@ -63,11 +60,10 @@ public static class ValidatedAuthorizeRequestExtensions
 
     public static IEnumerable<string> GetAcrValues(this ValidatedAuthorizeRequest request)
     {
-        return request
+        return [.. request
             .AuthenticationContextReferenceClasses
-            .Where(acr => !Constants.KnownAcrValues.All.Any(well_known => acr.StartsWith(well_known)))
-            .Distinct()
-            .ToArray();
+            .Where(acr => !Constants.KnownAcrValues.All.Any(well_known => acr.StartsWith(well_known, StringComparison.Ordinal)))
+            .Distinct()];
     }
 
     public static void RemoveAcrValue(this ValidatedAuthorizeRequest request, string value)
@@ -86,7 +82,7 @@ public static class ValidatedAuthorizeRequestExtensions
 
     public static void AddAcrValue(this ValidatedAuthorizeRequest request, string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(value));
 
         request.AuthenticationContextReferenceClasses.Add(value);
         var acr_values = request.AuthenticationContextReferenceClasses.ToSpaceSeparatedString();
@@ -97,7 +93,7 @@ public static class ValidatedAuthorizeRequestExtensions
     {
         if (request == null) return null;
         if (!request.IsOpenIdRequest) return null;
-            
+
         if (request.SessionId == null) return null;
 
         if (request.ClientId.IsMissing()) return null;
@@ -116,11 +112,7 @@ public static class ValidatedAuthorizeRequestExtensions
 
         var bytes = Encoding.UTF8.GetBytes(clientId + origin + sessionId + salt);
         byte[] hash;
-
-        using (var sha = SHA256.Create())
-        {
-            hash = sha.ComputeHash(bytes);
-        }
+        hash = SHA256.HashData(bytes);
 
         return Base64Url.Encode(hash) + "." + salt;
     }

@@ -31,7 +31,7 @@ internal class MessageCookie<TModel>
         _protector = provider.CreateProtector(MessageType);
     }
 
-    private string MessageType => typeof(TModel).Name;
+    private static string MessageType => typeof(TModel).Name;
 
     private string Protect(Message<TModel> message)
     {
@@ -48,9 +48,9 @@ internal class MessageCookie<TModel>
         return message;
     }
 
-    private string CookiePrefix => MessageType + ".";
+    private static string CookiePrefix => MessageType + ".";
 
-    private string GetCookieFullName(string id)
+    private static string GetCookieFullName(string id)
     {
         return CookiePrefix + id;
     }
@@ -60,9 +60,9 @@ internal class MessageCookie<TModel>
     private IEnumerable<string> GetCookieNames()
     {
         var key = CookiePrefix;
-        foreach ((var name, var _) in _context.HttpContext.Request.Cookies)
+        foreach (var (name, _) in _context.HttpContext.Request.Cookies)
         {
-            if (name.StartsWith(key))
+            if (name.StartsWith(key, StringComparison.Ordinal))
             {
                 yield return name;
             }
@@ -75,7 +75,7 @@ internal class MessageCookie<TModel>
     {
         ClearOverflow();
 
-        if (message == null) throw new ArgumentNullException(nameof(message));
+        ArgumentNullException.ThrowIfNull(message);
 
         var name = GetCookieFullName(id);
         var data = Protect(message);

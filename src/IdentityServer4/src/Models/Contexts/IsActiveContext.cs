@@ -17,8 +17,8 @@ public class IsActiveContext
     /// </summary>
     public IsActiveContext(ClaimsPrincipal subject, Client client, string caller)
     {
-        if (subject == null) throw new ArgumentNullException(nameof(subject));
-        if (client == null) throw new ArgumentNullException(nameof(client));
+        ArgumentNullException.ThrowIfNull(subject);
+        ArgumentNullException.ThrowIfNull(client);
         if (caller.IsMissing()) throw new ArgumentNullException(nameof(caller));
 
         Subject = subject;

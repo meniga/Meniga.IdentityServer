@@ -36,7 +36,7 @@ public class DefaultPersistedGrantService : IPersistedGrantService
     /// <inheritdoc/>
     public async Task<IEnumerable<Grant>> GetAllGrantsAsync(string subjectId)
     {
-        if (string.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(subjectId));
             
         var grants = (await _store.GetAllAsync(new PersistedGrantFilter { SubjectId = subjectId })).ToArray();
 
@@ -103,7 +103,7 @@ public class DefaultPersistedGrantService : IPersistedGrantService
         return [];
     }
 
-    private IEnumerable<Grant> Join(IEnumerable<Grant> first, IEnumerable<Grant> second)
+    private static IEnumerable<Grant> Join(IEnumerable<Grant> first, IEnumerable<Grant> second)
     {
         var list = first.ToList();
 
@@ -145,7 +145,7 @@ public class DefaultPersistedGrantService : IPersistedGrantService
     /// <inheritdoc/>
     public Task RemoveAllGrantsAsync(string subjectId, string clientId = null, string sessionId = null)
     {
-        if (string.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(subjectId));
 
         return _store.RemoveAllAsync(new PersistedGrantFilter {
             SubjectId = subjectId,

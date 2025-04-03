@@ -41,7 +41,7 @@ public class TestUserStore
                 return true;
             }
                 
-            return user.Password.Equals(password);
+            return user.Password.Equals(password, StringComparison.Ordinal);
         }
             
         return false;
@@ -100,9 +100,9 @@ public class TestUserStore
                 filtered.Add(new Claim(JwtClaimTypes.Name, claim.Value));
             }
             // if the JWT handler has an outbound mapping to an OIDC claim use that
-            else if (JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.ContainsKey(claim.Type))
+            else if (JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.TryGetValue(claim.Type, out var value))
             {
-                filtered.Add(new Claim(JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap[claim.Type], claim.Value));
+                filtered.Add(new Claim(value, claim.Value));
             }
             // copy the claim as-is
             else

@@ -45,7 +45,7 @@ internal class CheckSessionResult : IEndpointResult
     {
         context.Response.AddScriptCspHeaders(_options.Csp, "sha256-fa5rxHhZ799izGRP38+h4ud5QXNT0SFaFlh4eqDumBI=");
     }
-    private string GetHtml(string cookieName)
+    private static string GetHtml(string cookieName)
     {
         if (cookieName != LastCheckSessionCookieName)
         {

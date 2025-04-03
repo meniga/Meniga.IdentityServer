@@ -43,7 +43,7 @@ public class IdentityServerTools
     /// <exception cref="System.ArgumentNullException">claims</exception>
     public virtual Task<string> IssueJwtAsync(int lifetime, IEnumerable<Claim> claims)
     {
-        if (claims == null) throw new ArgumentNullException(nameof(claims));
+        ArgumentNullException.ThrowIfNull(claims);
 
         var issuer = ContextAccessor.HttpContext.GetIdentityServerIssuerUri();
 
@@ -69,8 +69,8 @@ public class IdentityServerTools
     /// <exception cref="System.ArgumentNullException">claims</exception>
     public virtual Task<string> IssueJwtAsync(int lifetime, string issuer, IEnumerable<Claim> claims)
     {
-        if (string.IsNullOrWhiteSpace(issuer)) throw new ArgumentNullException(nameof(issuer));
-        if (claims == null) throw new ArgumentNullException(nameof(claims));
+        ArgumentException.ThrowIfNullOrWhiteSpace(nameof(issuer));
+        ArgumentNullException.ThrowIfNull(claims);
 
         var token = new Token
         {
