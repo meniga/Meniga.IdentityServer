@@ -82,10 +82,7 @@ namespace IdentityServer.IntegrationTests.Common
             {
                 if (basePath != null)
                 {
-                    app.Map(basePath, map =>
-                    {
-                        ConfigureApp(map);
-                    });
+                    app.Map(basePath, ConfigureApp);
                 }
                 else
                 {
@@ -161,19 +158,19 @@ namespace IdentityServer.IntegrationTests.Common
             // UI endpoints
             app.Map(Constants.UIConstants.DefaultRoutePaths.Login.EnsureLeadingSlash(), path =>
             {
-                path.Run(ctx => OnLogin(ctx));
+                path.Run(async ctx => await OnLogin(ctx));
             });
             app.Map(Constants.UIConstants.DefaultRoutePaths.Logout.EnsureLeadingSlash(), path =>
             {
-                path.Run(ctx => OnLogout(ctx));
+                path.Run(async ctx => await OnLogout(ctx));
             });
             app.Map(Constants.UIConstants.DefaultRoutePaths.Consent.EnsureLeadingSlash(), path =>
             {
-                path.Run(ctx => OnConsent(ctx));
+                path.Run(async ctx => await OnConsent(ctx));
             });
             app.Map(Constants.UIConstants.DefaultRoutePaths.Error.EnsureLeadingSlash(), path =>
             {
-                path.Run(ctx => OnError(ctx));
+                path.Run(async ctx => await OnError(ctx));
             });
 
             OnPostConfigure(app);

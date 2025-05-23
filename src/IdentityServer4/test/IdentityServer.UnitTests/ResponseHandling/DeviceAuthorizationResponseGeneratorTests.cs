@@ -29,7 +29,7 @@ namespace IdentityServer.UnitTests.ResponseHandling
         private readonly FakeUserCodeGenerator fakeUserCodeGenerator = new FakeUserCodeGenerator();
         private readonly IDeviceFlowCodeService deviceFlowCodeService = new DefaultDeviceFlowCodeService(new InMemoryDeviceFlowStore(), new StubHandleGenerationService());
         private readonly IdentityServerOptions options = new IdentityServerOptions();
-        private readonly StubClock clock = new StubClock();
+        private readonly StubClock clock = new();
         
         private readonly DeviceAuthorizationResponseGenerator generator;
         private readonly DeviceAuthorizationRequestValidationResult testResult;
@@ -64,14 +64,14 @@ namespace IdentityServer.UnitTests.ResponseHandling
         {
             var validationResult = new DeviceAuthorizationRequestValidationResult(new ValidatedDeviceAuthorizationRequest());
             Func <Task> act = () => generator.ProcessAsync(validationResult, TestBaseUrl);
-            act.Should().Throw<ArgumentNullException>();
+            act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]
         public void ProcessAsync_when_baseurl_null_exect_exception()
         {
             Func<Task> act = () => generator.ProcessAsync(testResult, null);
-            act.Should().Throw<ArgumentException>();
+            act.Should().ThrowAsync<ArgumentException>();
         }
 
         [Fact]

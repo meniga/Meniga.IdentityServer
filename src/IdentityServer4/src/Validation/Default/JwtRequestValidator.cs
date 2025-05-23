@@ -3,6 +3,7 @@
 
 
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 using IdentityModel;
 using IdentityServer4.Configuration;
 using IdentityServer4.Extensions;
@@ -201,11 +202,11 @@ public class JwtRequestValidator
                     case string s:
                         payload.Add(key, s);
                         break;
-                    case JObject jobj:
-                        payload.Add(key, jobj.ToString(Formatting.None));
+                    case JsonElement { ValueKind: JsonValueKind.Object } jobj:
+                        payload.Add(key, jobj.ToString());
                         break;
-                    case JArray jarr:
-                        payload.Add(key, jarr.ToString(Formatting.None));
+                    case JsonElement { ValueKind: JsonValueKind.Array } jarr:
+                    payload.Add(key, jarr.ToString());
                         break;
                 }
             }
