@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -50,14 +50,14 @@ namespace IdentityServer4.EntityFramework.IntegrationTests.Stores
                 ClientName = "Test Client"
             };
 
-            using (var context = new ConfigurationDbContext(options, StoreOptions))
+            await using (var context = new ConfigurationDbContext(options, StoreOptions))
             {
                 context.Clients.Add(testClient.ToEntity());
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             Client client;
-            using (var context = new ConfigurationDbContext(options, StoreOptions))
+            await using (var context = new ConfigurationDbContext(options, StoreOptions))
             {
                 var store = new ClientStore(context, FakeLogger<ClientStore>.Create());
                 client = await store.FindClientByIdAsync(testClient.ClientId);
