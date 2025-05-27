@@ -9,23 +9,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Remove="compilerconfig.json"/>
+        <Content Remove="compilerconfig.json" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="compilerconfig.json"/>
+        <None Include="compilerconfig.json" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" />
 
-        <PackageReference Include="Serilog.AspNetCore" Version="3.2.0"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
 
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
         <!--<PackageReference Include="IdentityServer4.EntityFramework" />-->
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="All"/>
-        <PackageReference Include="System.Security.Principal.Windows"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="All" />
+        <PackageReference Include="System.Security.Principal.Windows" />
+        <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 
-        <ProjectReference Include="..\src\IdentityServer4.csproj"/>
+        <ProjectReference Include="..\src\IdentityServer4.csproj" />
     </ItemGroup>
 </Project>
