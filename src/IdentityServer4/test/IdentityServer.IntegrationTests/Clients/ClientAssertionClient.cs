@@ -2,14 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using FluentAssertions;
 using IdentityModel;
 using IdentityModel.Client;
@@ -18,8 +14,6 @@ using IdentityServer.IntegrationTests.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace IdentityServer.IntegrationTests.Clients
@@ -204,22 +198,21 @@ namespace IdentityServer.IntegrationTests.Clients
             response.RefreshToken.Should().BeNull();
 
             var payload = GetPayload(response);
-            
-            payload.Count().Should().Be(8);
-            payload.Should().Contain("iss", "https://idsvr4");
-            payload.Should().Contain("client_id", ClientId);
-            payload.Keys.Should().Contain("iat");
-            
-            var scopes = payload["scope"] as JArray;
-            scopes.First().ToString().Should().Be("api1");
 
-            payload["aud"].Should().Be("api");
+            payload.Count.Should().Be(8);
+            payload["iss"].GetString().Should().Be("https://idsvr4");
+            payload["aud"].GetString().Should().Be("api");
+            payload["client_id"].GetString().Should().Be(ClientId);
+            payload.Keys.Should().Contain("iat");
+
+            var scopes = payload["scope"].EnumerateArray();
+            scopes.First().ToString().Should().Be("api1");
         }
 
-        private Dictionary<string, object> GetPayload(TokenResponse response)
+        private Dictionary<string, JsonElement> GetPayload(TokenResponse response)
         {
             var token = response.AccessToken.Split('.').Skip(1).Take(1).First();
-            var dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(
+            var dictionary = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
                 Encoding.UTF8.GetString(Base64Url.Decode(token)));
 
             return dictionary;

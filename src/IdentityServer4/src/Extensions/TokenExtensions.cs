@@ -1,34 +1,34 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
 using IdentityModel;
 using IdentityServer4.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using IdentityServer4.Configuration;
+using System.Text.Json;
 
 namespace IdentityServer4.Extensions;
 
 /// <summary>
-/// Extensions for Token
+/// Extensions for <see cref="Token"/>.
 /// </summary>
 public static class TokenExtensions
 {
     /// <summary>
-    /// Creates the default JWT payload.
+    /// Creates the default JWT <see cref="JwtPayload"/>.
     /// </summary>
     /// <param name="token">The token.</param>
     /// <param name="clock">The clock.</param>
-    /// <param name="options">The options</param>
-    /// <param name="logger">The logger.</param>
-    /// <returns></returns>
-    /// <exception cref="Exception">
-    /// </exception>
-    public static JwtPayload CreateJwtPayload(this Token token, TimeProvider clock, IdentityServerOptions options, ILogger logger)
+    /// <param name="options">IdentityServer options.</param>
+    /// <param name="logger">Logger.</param>
+    /// <returns>The populated payload.</returns>
+    public static JwtPayload CreateJwtPayload(
+        this Token token,
+        TimeProvider clock,
+        IdentityServerOptions options,
+        ILogger logger)
     {
         var payload = new JwtPayload(
             token.Issuer,
@@ -37,19 +37,25 @@ public static class TokenExtensions
             clock.GetUtcNow().UtcDateTime,
             clock.GetUtcNow().UtcDateTime.AddSeconds(token.Lifetime));
 
+        // audiences
         foreach (var aud in token.Audiences)
         {
             payload.AddClaim(new Claim(JwtClaimTypes.Audience, aud));
         }
 
-        var amrClaims = token.Claims.Where(x => x.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
-        var scopeClaims = token.Claims.Where(x => x.Type == JwtClaimTypes.Scope).ToArray();
-        var jsonClaims = token.Claims.Where(x => x.ValueType == IdentityServerConstants.ClaimValueTypes.Json).ToList();
-            
-        // add confirmation claim if present (it's JSON valued)
+        // segregate claim types
+        var amrClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
+        var scopeClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
+        var jsonClaims = token.Claims
+            .Where(c => c.ValueType == IdentityServerConstants.ClaimValueTypes.Json)
+            .ToList();
+
         if (token.Confirmation.IsPresent())
         {
-            jsonClaims.Add(new Claim(JwtClaimTypes.Confirmation, token.Confirmation, IdentityServerConstants.ClaimValueTypes.Json));
+            jsonClaims.Add(new Claim(
+                JwtClaimTypes.Confirmation,
+                token.Confirmation,
+                IdentityServerConstants.ClaimValueTypes.Json));
         }
 
         var normalClaims = token.Claims
@@ -59,90 +65,114 @@ public static class TokenExtensions
 
         payload.AddClaims(normalClaims);
 
-        // scope claims
+        // scopes
         if (!scopeClaims.IsNullOrEmpty())
         {
-            var scopeValues = scopeClaims.Select(x => x.Value).ToArray();
-
-            if (options.EmitScopesAsSpaceDelimitedStringInJwt)
-            {
-                payload.Add(JwtClaimTypes.Scope, string.Join(" ", scopeValues));
-            }
-            else
-            {
-                payload.Add(JwtClaimTypes.Scope, scopeValues);
-            }
+            var scopes = scopeClaims.Select(c => c.Value).ToArray();
+            payload.Add(
+                JwtClaimTypes.Scope,
+                options.EmitScopesAsSpaceDelimitedStringInJwt
+                    ? string.Join(' ', scopes)
+                    : scopes);
         }
 
-        // amr claims
+        // authentication methods
         if (!amrClaims.IsNullOrEmpty())
         {
-            var amrValues = amrClaims.Select(x => x.Value).Distinct().ToArray();
-            payload.Add(JwtClaimTypes.AuthenticationMethod, amrValues);
+            payload.Add(
+                JwtClaimTypes.AuthenticationMethod,
+                amrClaims.Select(c => c.Value).Distinct().ToArray());
         }
-            
-        // deal with json types
-        // calling ToArray() to trigger JSON parsing once and so later 
-        // collection identity comparisons work for the anonymous type
+
+        // JSON-valued claims
         try
         {
-            var jsonTokens = jsonClaims.Select(x => new { x.Type, JsonValue = JRaw.Parse(x.Value) }).ToArray();
+            var jsonTokens = jsonClaims
+                .Select(c =>
+                {
+                    try
+                    {
+                        // Parse with strict RFC-8259 rules; throws on invalid JSON.
+                        using var doc = JsonDocument.Parse(c.Value);
+                        return new { c.Type, Element = doc.RootElement.Clone() };
+                    }
+                    catch (JsonException jex)
+                    {
+                        logger.LogCritical(jex, "Invalid JSON in claim '{claimType}'", c.Type);
+                        throw;
+                    }
+                })
+                .ToArray();
 
-            var jsonObjects = jsonTokens.Where(x => x.JsonValue.Type == JTokenType.Object).ToArray();
-            var jsonObjectGroups = jsonObjects.GroupBy(x => x.Type).ToArray();
-            foreach (var group in jsonObjectGroups)
+            // ---- JSON objects --------------------------------------------------
+            var jsonObjects = jsonTokens
+                .Where(x => x.Element.ValueKind == JsonValueKind.Object)
+                .ToArray();
+
+            foreach (var grp in jsonObjects.GroupBy(x => x.Type))
             {
-                if (payload.ContainsKey(group.Key))
-                {
-                    throw new Exception($"Can't add two claims where one is a JSON object and the other is not a JSON object ({group.Key})");
-                }
+                if (payload.ContainsKey(grp.Key))
+                    throw new InvalidOperationException(
+                        $"Can't add two claims where one is a JSON object and the other is not ({grp.Key}).");
 
-                if (group.Skip(1).Any())
+                if (grp.Skip(1).Any())
                 {
-                    // add as array
-                    payload.Add(group.Key, group.Select(x => x.JsonValue).ToArray());
+                    // turn the IEnumerable<JsonElement> into a single JsonElement[array]
+                    var arr = grp.Select(x => x.Element).ToArray();
+                    var merged = JsonDocument
+                        .Parse(JsonSerializer.Serialize(arr))
+                        .RootElement.Clone();
+
+                    payload.Add(grp.Key, merged);
                 }
                 else
                 {
-                    // add just one
-                    payload.Add(group.Key, group.First().JsonValue);
+                    payload.Add(grp.Key, grp.First().Element);
                 }
             }
 
-            var jsonArrays = jsonTokens.Where(x => x.JsonValue.Type == JTokenType.Array).ToArray();
-            var jsonArrayGroups = jsonArrays.GroupBy(x => x.Type).ToArray();
-            foreach (var group in jsonArrayGroups)
+            // ---- JSON arrays ---------------------------------------------------
+            var jsonArrays = jsonTokens
+                .Where(x => x.Element.ValueKind == JsonValueKind.Array)
+                .ToArray();
+
+            foreach (var grp in jsonArrays.GroupBy(x => x.Type))
             {
-                if (payload.ContainsKey(group.Key))
-                {
-                    throw new Exception(
-                        $"Can't add two claims where one is a JSON array and the other is not a JSON array ({group.Key})");
-                }
+                if (payload.ContainsKey(grp.Key))
+                    throw new InvalidOperationException(
+                        $"Can't add two claims where one is a JSON array and the other is not ({grp.Key}).");
 
-                var newArr = new List<JToken>();
-                foreach (var arrays in group)
-                {
-                    var arr = (JArray)arrays.JsonValue;
-                    newArr.AddRange(arr);
-                }
+                // flatten all arrays for this claim-type
+                var flat = grp
+                    .SelectMany(x => x.Element.EnumerateArray().Select(e => e.Clone()))
+                    .ToArray();
 
-                // add just one array for the group/key/claim type
-                payload.Add(group.Key, newArr.ToArray());
+                var merged = JsonDocument
+                    .Parse(JsonSerializer.Serialize(flat))
+                    .RootElement.Clone();
+
+                payload.Add(grp.Key, merged);
             }
 
-            var unsupportedJsonTokens = jsonTokens.Except(jsonObjects).Except(jsonArrays).ToArray();
-            var unsupportedJsonClaimTypes = unsupportedJsonTokens.Select(x => x.Type).Distinct().ToArray();
-            if (unsupportedJsonClaimTypes.Any())
+            // ---- unsupported JSON kinds ---------------------------------------
+            var unsupported = jsonTokens
+                .Where(x => x.Element.ValueKind != JsonValueKind.Object
+                            && x.Element.ValueKind != JsonValueKind.Array)
+                .Select(x => x.Type)
+                .Distinct()
+                .ToArray();
+
+            if (unsupported.Any())
             {
-                throw new Exception(
-                    $"Unsupported JSON type for claim types: {unsupportedJsonClaimTypes.Aggregate((x, y) => x + ", " + y)}");
+                throw new InvalidOperationException(
+                    $"Unsupported JSON type for claim types: {string.Join(", ", unsupported)}");
             }
 
             return payload;
         }
         catch (Exception ex)
         {
-            logger.LogCritical(ex, "Error creating a JSON valued claim");
+            logger.LogCritical(ex, "Error creating a JSON-valued claim");
             throw;
         }
     }

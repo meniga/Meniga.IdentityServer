@@ -157,20 +157,20 @@ internal static class StringExtensions
         }
 
         return false;
-    }
 
-    static bool HasControlCharacter(ReadOnlySpan<char> readOnlySpan)
-    {
-        // URLs may not contain ASCII control characters.
-        foreach (var t in readOnlySpan)
+        static bool HasControlCharacter(ReadOnlySpan<char> readOnlySpan)
         {
-            if (char.IsControl(t))
+            // URLs may not contain ASCII control characters.
+            for (var i = 0; i < readOnlySpan.Length; i++)
             {
-                return true;
+                if (char.IsControl(readOnlySpan[i]))
+                {
+                    return true;
+                }
             }
-        }
 
-        return false;
+            return false;
+        }
     }
 
     [DebuggerStepThrough]

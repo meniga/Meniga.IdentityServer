@@ -187,7 +187,8 @@ namespace IdentityServer.UnitTests.Validation.Setup
             IRedirectUriValidator uriValidator = null,
             IResourceValidator resourceValidator = null,
             JwtRequestValidator jwtRequestValidator = null,
-            IJwtRequestUriHttpClient jwtRequestUriHttpClient = null)
+            IJwtRequestUriHttpClient jwtRequestUriHttpClient = null,
+            IUserSession userSession = null)
         {
             if (options == null)
             {
@@ -229,8 +230,10 @@ namespace IdentityServer.UnitTests.Validation.Setup
                 jwtRequestUriHttpClient = new DefaultJwtRequestUriHttpClient(new HttpClient(new NetworkHandler(new Exception("no jwt request uri response configured"))), options, new LoggerFactory());
             }
 
-
-            var userSession = new MockUserSession();
+            if (userSession == null)
+            {
+                userSession = new MockUserSession();
+            }
 
             return new AuthorizeRequestValidator(
                 options,
@@ -248,7 +251,8 @@ namespace IdentityServer.UnitTests.Validation.Setup
             IReferenceTokenStore store = null, 
             IRefreshTokenStore refreshTokenStore = null,
             IProfileService profile = null, 
-            IdentityServerOptions options = null, TimeProvider clock = null)
+            IdentityServerOptions options = null, 
+            TimeProvider clock = null)
         {
             if (options == null)
             {
@@ -265,7 +269,7 @@ namespace IdentityServer.UnitTests.Validation.Setup
                 store = CreateReferenceTokenStore();
             }
 
-            clock = clock ?? new StubClock();
+            clock ??= new StubClock();
 
             if (refreshTokenStore == null)
             {

@@ -7,7 +7,6 @@ using IdentityServer4.Configuration;
 using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
 using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
@@ -182,7 +181,7 @@ public static class IdentityServerBuilderExtensionsCrypto
 
             if (persistKey)
             {
-                File.WriteAllText(filename, JsonConvert.SerializeObject(jwk));
+                File.WriteAllText(filename, System.Text.Json.JsonSerializer.Serialize(jwk));
             }
 
             return builder.AddSigningCredential(key, signingAlgorithm);

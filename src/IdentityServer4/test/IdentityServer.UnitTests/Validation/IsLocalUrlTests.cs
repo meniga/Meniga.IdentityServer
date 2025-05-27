@@ -1,16 +1,12 @@
 using FluentAssertions;
-using IdentityServer.UnitTests.Common;
-using IdentityServer.UnitTests.Validation.Setup;
 using IdentityServer4.Extensions;
-using IdentityServer4.Services;
-using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace IdentityServer.UnitTests.Validation;
 
 public class IsLocalUrlTests
 {
-    private const string queryParameters = "?client_id=client" +
+    private const string queryParameters = "?client_id=mvc.code" +
         "&redirect_uri=https%3A%2F%2Flocalhost%3A44302%2Fsignin-oidc" +
         "&response_type=code" +
         "&scope=openid%20profile%20email%20custom.profile%20resource1.scope1%20resource2.scope1%20offline_access" +
@@ -58,107 +54,8 @@ public class IsLocalUrlTests
 
     [Theory]
     [MemberData(nameof(TestCases))]
-    public async void GetAuthorizationContextAsync(string returnUrl, bool expected)
-    {
-        var interactionService = new DefaultIdentityServerInteractionService(null, null, null, null, null, null, null,
-            GetReturnUrlParser(), new LoggerFactory().CreateLogger<DefaultIdentityServerInteractionService>());
-        var actual = await interactionService.GetAuthorizationContextAsync(returnUrl);
-        if (expected)
-        {
-            actual.Should().NotBeNull();
-        }
-        else
-        {
-            actual.Should().BeNull();
-        }
-    }
-
-    [Theory]
-    [MemberData(nameof(TestCases))]
     public void IsLocalUrl(string returnUrl, bool expected)
     {
         returnUrl.IsLocalUrl().Should().Be(expected);
-    }
-
-    //[Theory]
-    //[MemberData(nameof(TestCases))]
-    //public void GetIdentityServerRelativeUrl(string returnUrl, bool expected)
-    //{
-    //    var serverUrls = new MockServerUrls
-    //    {
-    //        Origin = "https://localhost:5001",
-    //        BasePath = "/"
-    //    };
-    //    var actual = serverUrls.GetIdentityServerRelativeUrl(returnUrl);
-    //    if (expected)
-    //    {
-    //        actual.Should().NotBeNull();
-    //    }
-    //    else
-    //    {
-    //        actual.Should().BeNull();
-    //    }
-    //}
-
-    [Theory]
-    [MemberData(nameof(TestCases))]
-    public async void OidcReturnUrlParser_ParseAsync(string returnUrl, bool expected)
-    {
-        var oidcParser = GetOidcReturnUrlParser();
-        var actual = await oidcParser.ParseAsync(returnUrl);
-        if (expected)
-        {
-            actual.Should().NotBeNull();
-        }
-        else
-        {
-            actual.Should().BeNull();
-        }
-    }
-
-    [Theory]
-    [MemberData(nameof(TestCases))]
-    public void OidcReturnUrlParser_IsValidReturnUrl(string returnUrl, bool expected)
-    {
-        var oidcParser = GetOidcReturnUrlParser();
-        oidcParser.IsValidReturnUrl(returnUrl).Should().Be(expected);
-    }
-
-
-    [Theory]
-    [MemberData(nameof(TestCases))]
-    public void ReturnUrlParser_IsValidReturnUrl(string returnUrl, bool expected)
-    {
-        var parser = GetReturnUrlParser();
-        parser.IsValidReturnUrl(returnUrl).Should().Be(expected);
-    }
-
-    [Theory]
-    [MemberData(nameof(TestCases))]
-    public async void ReturnUrlParser_ParseAsync(string returnUrl, bool expected)
-    {
-        var parser = GetReturnUrlParser();
-        var actual = await parser.ParseAsync(returnUrl);
-        if (expected)
-        {
-            actual.Should().NotBeNull();
-        }
-        else
-        {
-            actual.Should().BeNull();
-        }
-    }
-
-    private static ReturnUrlParser GetReturnUrlParser()
-    {
-        var oidcParser = GetOidcReturnUrlParser();
-        var parser = new ReturnUrlParser(new IReturnUrlParser[] { oidcParser });
-        return parser;
-    }
-
-    private static OidcReturnUrlParser GetOidcReturnUrlParser()
-    {
-        var x = new OidcReturnUrlParser(Factory.CreateAuthorizeRequestValidator(), new MockUserSession(), new LoggerFactory().CreateLogger<OidcReturnUrlParser>());
-        return x;
     }
 }

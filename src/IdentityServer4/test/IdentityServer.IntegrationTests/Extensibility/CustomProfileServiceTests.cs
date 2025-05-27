@@ -1,14 +1,13 @@
-﻿using System.Net;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using IdentityModel;
 using IdentityServer.IntegrationTests.Common;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
 using Xunit;
 
 namespace IdentityServer.IntegrationTests.Extensibility
@@ -73,10 +72,8 @@ namespace IdentityServer.IntegrationTests.Extensibility
 
             var payload = authorization.IdentityToken.Split('.')[1];
             var json = Encoding.UTF8.GetString(Base64Url.Decode(payload));
-            var obj = JObject.Parse(json);
-
-            obj.GetValue("foo").Should().NotBeNull();
-            obj["foo"].ToString().Should().Be("bar");
+            var obj = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+            obj["foo"].GetString().Should().Be("bar");
         }
     }
 
