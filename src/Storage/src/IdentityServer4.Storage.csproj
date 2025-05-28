@@ -37,8 +37,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IdentityModel" Version="4.6.0" />
+        <PackageReference Include="IdentityModel" Version="8.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" Version="8.0.0" />
     </ItemGroup>
 
+    <Target Name="SetAssemblyVersion" AfterTargets="MinVer">
+        <PropertyGroup>
+            <AssemblyVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).0</AssemblyVersion>
+        </PropertyGroup>
+    </Target>
 </Project>

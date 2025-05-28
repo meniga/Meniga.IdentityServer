@@ -53,10 +53,10 @@ namespace IdentityServer.UnitTests.ResponseHandling
         }
 
         [Fact]
-        public void ProcessAsync_when_valiationresult_null_exect_exception()
+        public async Task ProcessAsync_when_valiationresult_null_exect_exception()
         {
             Func<Task> act = () => generator.ProcessAsync(null, TestBaseUrl);
-            act.Should().Throw<ArgumentNullException>();
+            await act.Should().ThrowAsync<ArgumentNullException>();
         }
 
         [Fact]

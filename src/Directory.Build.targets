@@ -9,7 +9,7 @@
         <FrameworkVersion>8.0.0</FrameworkVersion>
         <EntityFrameworkVersion>8.0.14</EntityFrameworkVersion>
 
-        <IdentityServerVersion>4.1.2-*</IdentityServerVersion>
+        <IdentityServerVersion>8.0.0-*</IdentityServerVersion>
 
         <!-- Configure code analysis. -->
         <AnalysisLevel>8.0</AnalysisLevel>
@@ -35,16 +35,16 @@
 
     <ItemGroup>
         <!--build related-->
-        <PackageReference Update="MinVer" Version="2.3.0" PrivateAssets="All"/>
-        <PackageReference Update="SimpleExec" Version="6.2.0"/>
-        <PackageReference Update="Bullseye" Version="3.3.0"/>
+        <PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All"/>
+        <PackageReference Update="SimpleExec" Version="11.0.0"/>
+        <PackageReference Update="Bullseye" Version="4.2.1"/>
         <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
 
         <!--tests -->
-        <PackageReference Update="FluentAssertions" Version="5.10.2"/>
-        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.2.0"/>
-        <PackageReference Update="xunit" Version="2.4.1"/>
-        <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" PrivateAssets="All"/>
+        <PackageReference Update="FluentAssertions" Version="6.5.1"/>
+        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
+        <PackageReference Update="xunit" Version="2.9.0"/>
+        <PackageReference Update="xunit.runner.visualstudio" Version="2.5.4" PrivateAssets="All"/>
 
         <!--our stuff -->
         <PackageReference Update="IdentityServer4" Version="$(IdentityServerVersion)"/>
@@ -64,9 +64,9 @@
         <!--misc -->
         <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.7.0"/>
         <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.7.0"/>
-        <PackageReference Update="System.Security.Principal.Windows" Version="4.7.0"/>
+        <PackageReference Update="System.Security.Principal.Windows" Version="5.0.0"/>
         <PackageReference Update="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Update="AutoMapper" Version="[10.0.0,11.0)"/>
+        <PackageReference Update="AutoMapper" Version="14.0.0"/>
 
         <!--microsoft asp.net core -->
         <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(FrameworkVersion)"/>
