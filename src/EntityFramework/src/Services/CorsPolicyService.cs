@@ -4,15 +4,15 @@
 
 using System;
 using System.Threading.Tasks;
-using IdentityServer4.Services;
+using Meniga.IdentityServer.Services;
 using System.Linq;
-using IdentityServer4.EntityFramework.Interfaces;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityServer4.EntityFramework.Services
+namespace Meniga.IdentityServer.EntityFramework.Services
 {
     /// <summary>
     /// Implementation of ICorsPolicyService that consults the client configuration in the database for allowed CORS origins.

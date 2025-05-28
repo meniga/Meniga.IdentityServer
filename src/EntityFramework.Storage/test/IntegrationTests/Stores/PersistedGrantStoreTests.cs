@@ -7,17 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.EntityFramework.Options;
-using IdentityServer4.EntityFramework.Stores;
-using IdentityServer4.Models;
-using IdentityServer4.Stores;
+using Meniga.IdentityServer.EntityFramework.DbContexts;
+using Meniga.IdentityServer.EntityFramework.Mappers;
+using Meniga.IdentityServer.EntityFramework.Options;
+using Meniga.IdentityServer.EntityFramework.Stores;
+using Meniga.IdentityServer.Models;
+using Meniga.IdentityServer.Stores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Xunit;
 
-namespace IdentityServer4.EntityFramework.IntegrationTests.Stores
+namespace Meniga.IdentityServer.EntityFramework.IntegrationTests.Stores
 {
     public class PersistedGrantStoreTests : IntegrationTest<PersistedGrantStoreTests, PersistedGrantDbContext, OperationalStoreOptions>
     {

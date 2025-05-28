@@ -1,6 +1,6 @@
 ﻿using Clients;
-using IdentityModel;
-using IdentityModel.Client;
+using Meniga.IdentityModel;
+using Meniga.IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

@@ -2,14 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityModel;
-using IdentityServer4.Extensions;
+using Meniga.IdentityModel;
+using Meniga.IdentityServer.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace IdentityServer4
+namespace Meniga.IdentityServer
 {
     /// <summary>
     /// Model properties of an IdentityServer user

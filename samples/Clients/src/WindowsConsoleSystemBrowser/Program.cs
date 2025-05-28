@@ -1,5 +1,5 @@
 ﻿using Clients;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using IdentityModel.OidcClient;
 using Microsoft.IdentityModel.Logging;
 using Serilog;

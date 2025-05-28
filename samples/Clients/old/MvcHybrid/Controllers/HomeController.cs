@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 using Clients;
 using Newtonsoft.Json.Linq;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 

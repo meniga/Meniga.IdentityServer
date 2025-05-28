@@ -1,9 +1,9 @@
-Remove-Item $env:USERPROFILE\.nuget\packages\identityserver4\ -Recurse -ErrorAction SilentlyContinue 
-Remove-Item $env:USERPROFILE\.nuget\packages\identityserver4.storage\ -Recurse -ErrorAction SilentlyContinue 
-Remove-Item $env:USERPROFILE\.nuget\packages\identityserver4.entityframework\ -Recurse -ErrorAction SilentlyContinue 
-Remove-Item $env:USERPROFILE\.nuget\packages\identityserver4.entityframework.storage\ -Recurse -ErrorAction SilentlyContinue 
-Remove-Item $env:USERPROFILE\.nuget\packages\identityserver4.aspnetidentity\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identityserver\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identityserver.storage\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identityserver.entityframework\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identityserver.entityframework.storage\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identityserver.aspnetidentity\ -Recurse -ErrorAction SilentlyContinue 
 
-Remove-Item $env:USERPROFILE\.nuget\packages\identitymodel\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\Meniga.identitymodel\ -Recurse -ErrorAction SilentlyContinue 
 Remove-Item $env:USERPROFILE\.nuget\packages\IdentityModel.AspNetCore.OAuth2Introspection\ -Recurse -ErrorAction SilentlyContinue 
-Remove-Item $env:USERPROFILE\.nuget\packages\IdentityServer4.AccessTokenValidation\ -Recurse -ErrorAction SilentlyContinue 
+Remove-Item $env:USERPROFILE\.nuget\packages\IdentityModel.AspNetCore.AccessTokenValidation\ -Recurse -ErrorAction SilentlyContinue 

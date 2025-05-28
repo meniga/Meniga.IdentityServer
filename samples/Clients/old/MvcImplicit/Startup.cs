@@ -1,5 +1,5 @@
 ﻿using Clients;
-using IdentityModel;
+using Meniga.IdentityModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

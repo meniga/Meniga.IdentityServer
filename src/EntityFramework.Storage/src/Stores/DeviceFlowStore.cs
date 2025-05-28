@@ -5,16 +5,16 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentityModel;
-using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.Models;
-using IdentityServer4.Stores;
-using IdentityServer4.Stores.Serialization;
+using Meniga.IdentityModel;
+using Meniga.IdentityServer.EntityFramework.Entities;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
+using Meniga.IdentityServer.Models;
+using Meniga.IdentityServer.Stores;
+using Meniga.IdentityServer.Stores.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace IdentityServer4.EntityFramework.Stores
+namespace Meniga.IdentityServer.EntityFramework.Stores
 {
     /// <summary>
     /// Implementation of IDeviceFlowStore thats uses EF.

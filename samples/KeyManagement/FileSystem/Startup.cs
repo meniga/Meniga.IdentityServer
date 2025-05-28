@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
-using IdentityModel;
+using Meniga.IdentityModel;
 using System.Linq;
 using System.IO;
 using Microsoft.Extensions.Configuration;

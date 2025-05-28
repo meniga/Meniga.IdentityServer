@@ -1,4 +1,4 @@
-﻿namespace IdentityServer4.Models.ManageViewModels
+﻿namespace Meniga.IdentityServer.Models.ManageViewModels
 {
     public class TwoFactorAuthenticationViewModel
     {

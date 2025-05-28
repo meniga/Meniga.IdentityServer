@@ -1,5 +1,5 @@
 ﻿using Clients;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using System;
 using System.Linq;
 using System.Net.Http;

@@ -6,16 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentityModel;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.EntityFramework.Options;
-using IdentityServer4.EntityFramework.Stores;
-using IdentityServer4.Models;
+using Meniga.IdentityModel;
+using Meniga.IdentityServer.EntityFramework.DbContexts;
+using Meniga.IdentityServer.EntityFramework.Mappers;
+using Meniga.IdentityServer.EntityFramework.Options;
+using Meniga.IdentityServer.EntityFramework.Stores;
+using Meniga.IdentityServer.Models;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace IdentityServer4.EntityFramework.IntegrationTests.Stores
+namespace Meniga.IdentityServer.EntityFramework.IntegrationTests.Stores
 {
     public class ScopeStoreTests : IntegrationTest<ScopeStoreTests, ConfigurationDbContext, ConfigurationStoreOptions>
     {

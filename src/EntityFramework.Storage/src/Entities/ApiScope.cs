@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityServer4.EntityFramework.Entities
+namespace Meniga.IdentityServer.EntityFramework.Entities
 {
     public class ApiScope
     {

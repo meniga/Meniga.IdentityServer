@@ -1,5 +1,5 @@
 ﻿using Clients;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using IdentityModel.OidcClient;
 using Newtonsoft.Json.Linq;
 using Serilog;

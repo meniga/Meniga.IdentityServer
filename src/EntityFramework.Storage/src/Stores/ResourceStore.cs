@@ -6,14 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.Models;
-using IdentityServer4.Stores;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
+using Meniga.IdentityServer.EntityFramework.Mappers;
+using Meniga.IdentityServer.Models;
+using Meniga.IdentityServer.Stores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace IdentityServer4.EntityFramework.Stores
+namespace Meniga.IdentityServer.EntityFramework.Stores
 {
     /// <summary>
     /// Implementation of IResourceStore thats uses EF.

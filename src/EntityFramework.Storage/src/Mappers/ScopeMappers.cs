@@ -3,9 +3,9 @@
 
 
 using AutoMapper;
-using IdentityServer4.EntityFramework.Entities;
+using Meniga.IdentityServer.EntityFramework.Entities;
 
-namespace IdentityServer4.EntityFramework.Mappers
+namespace Meniga.IdentityServer.EntityFramework.Mappers
 {
     /// <summary>
     /// Extension methods to map to/from entity/model for scopes.

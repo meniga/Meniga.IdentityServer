@@ -2,15 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Services;
-using IdentityServer4.EntityFramework.Stores;
-using IdentityServer4.Stores;
+using Meniga.IdentityServer.EntityFramework.DbContexts;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
+using Meniga.IdentityServer.EntityFramework.Services;
+using Meniga.IdentityServer.EntityFramework.Stores;
+using Meniga.IdentityServer.Stores;
 using System;
-using IdentityServer4.EntityFramework.Options;
-using IdentityServer4.EntityFramework;
-using IdentityServer4.EntityFramework.Storage;
+using Meniga.IdentityServer.EntityFramework.Options;
+using Meniga.IdentityServer.EntityFramework;
+using Meniga.IdentityServer.EntityFramework.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 

@@ -5,8 +5,8 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Clients;
-using IdentityModel;
-using IdentityModel.Client;
+using Meniga.IdentityModel;
+using Meniga.IdentityModel.Client;
 using Newtonsoft.Json.Linq;
 
 namespace ConsoleEphemeralMtlsClient

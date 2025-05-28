@@ -2,15 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4.Services;
-using IdentityServer4.Stores;
+using Meniga.IdentityServer.Services;
+using Meniga.IdentityServer.Stores;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using IdentityServer4.Events;
-using IdentityServer4.Extensions;
+using Meniga.IdentityServer.Events;
+using Meniga.IdentityServer.Extensions;
 
 namespace IdentityServerHost.Quickstart.UI
 {

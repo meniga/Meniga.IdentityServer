@@ -3,13 +3,13 @@
 
 
 using System;
-using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Extensions;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Options;
+using Meniga.IdentityServer.EntityFramework.Entities;
+using Meniga.IdentityServer.EntityFramework.Extensions;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
+using Meniga.IdentityServer.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityServer4.EntityFramework.DbContexts
+namespace Meniga.IdentityServer.EntityFramework.DbContexts
 {
     /// <summary>
     /// DbContext for the IdentityServer configuration data.

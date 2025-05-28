@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Clients;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using Newtonsoft.Json.Linq;
 
 namespace ConsoleParameterizedScopeClient

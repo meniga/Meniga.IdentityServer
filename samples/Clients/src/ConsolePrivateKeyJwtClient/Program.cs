@@ -1,6 +1,6 @@
 ﻿using Clients;
-using IdentityModel;
-using IdentityModel.Client;
+using Meniga.IdentityModel;
+using Meniga.IdentityModel.Client;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;

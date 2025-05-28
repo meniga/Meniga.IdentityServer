@@ -7,9 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using IdentityModel;
+using Meniga.IdentityModel;
 
-namespace IdentityServer4.AspNetIdentity
+namespace Meniga.IdentityServer.AspNetIdentity
 {
     internal class UserClaimsFactory<TUser> : IUserClaimsPrincipalFactory<TUser>
         where TUser : class

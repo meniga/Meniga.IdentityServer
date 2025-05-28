@@ -5,9 +5,9 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using AutoMapper;
-using IdentityServer4.Models;
+using Meniga.IdentityServer.Models;
 
-namespace IdentityServer4.EntityFramework.Mappers
+namespace Meniga.IdentityServer.EntityFramework.Mappers
 {
     /// <summary>
     /// Defines entity/model mapping for clients.

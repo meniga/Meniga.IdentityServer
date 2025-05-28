@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using IdentityModel.Client;
+using Meniga.IdentityModel.Client;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
-using IdentityModel;
+using Meniga.IdentityModel;
 using System.Security.Cryptography;
 using System.IdentityModel.Tokens.Jwt;
 using Clients;

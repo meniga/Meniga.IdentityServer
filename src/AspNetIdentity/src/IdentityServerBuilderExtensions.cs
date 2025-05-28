@@ -4,10 +4,10 @@
 
 using System;
 using System.Linq;
-using IdentityModel;
-using IdentityServer4;
-using IdentityServer4.AspNetIdentity;
-using IdentityServer4.Configuration;
+using Meniga.IdentityModel;
+using Meniga.IdentityServer;
+using Meniga.IdentityServer.AspNetIdentity;
+using Meniga.IdentityServer.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 

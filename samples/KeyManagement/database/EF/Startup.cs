@@ -4,8 +4,8 @@
 
 using System;
 using System.Linq;
-using IdentityModel;
-using IdentityServer4.KeyManagement.EntityFramework;
+using Meniga.IdentityModel;
+using Meniga.IdentityServer.KeyManagement.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;

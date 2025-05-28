@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.EntityFramework.Options;
-using IdentityServer4.EntityFramework.Stores;
-using IdentityServer4.Stores;
-using IdentityServer4.Test;
+using Meniga.IdentityServer.EntityFramework.DbContexts;
+using Meniga.IdentityServer.EntityFramework.Entities;
+using Meniga.IdentityServer.EntityFramework.Interfaces;
+using Meniga.IdentityServer.EntityFramework.Options;
+using Meniga.IdentityServer.EntityFramework.Stores;
+using Meniga.IdentityServer.Stores;
+using Meniga.IdentityServer.Test;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace IdentityServer4.EntityFramework.IntegrationTests.TokenCleanup
+namespace Meniga.IdentityServer.EntityFramework.IntegrationTests.TokenCleanup
 {
     public class TokenCleanupTests : IntegrationTest<TokenCleanupTests, PersistedGrantDbContext, OperationalStoreOptions>
     {
