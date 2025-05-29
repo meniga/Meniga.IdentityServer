@@ -32,7 +32,7 @@ jobs:
       - run: dotnet nuget add source --username _ --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/meniga/index.json"
       
       - name: Make all .sh files executable
-        run: chmod +x ./**/*.sh
+        run: chmod +x ./src/**/*.sh
 
       - run: ./build.sh
 
