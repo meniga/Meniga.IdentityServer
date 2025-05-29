@@ -14,23 +14,23 @@ env:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        runs-on: [macOS-latest, ubuntu-latest, windows-latest]
-    name: ${{ matrix.runs-on }}
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
     - run: dotnet --info
-    
-    - if: contains(matrix.runs-on, 'macOS') || contains(matrix.runs-on, 'ubuntu')
-      run: ./build.sh
-    - if: matrix.runs-on == 'windows-latest' && github.ref != 'refs/heads/main' && !contains(github.ref, 'refs/tags/')
-      run: ./build.ps1
-    - if: (matrix.runs-on == 'windows-latest') && (github.ref == 'refs/heads/main' || contains(github.ref, 'refs/tags/'))
+
+    - run: ./build.sh
+
+    - if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+      name: Publish nuget
+      run: dotnet nuget push ./nuget/*.nupkg --source "https://nuget.pkg.github.com/meniga/index.json" --api-key ${{ secrets.GITHUB_TOKEN }}
       env:
-        SignClientSecret: ${{ secrets.SIGNCLIENT }}
-      run: |
-        ./build.ps1 sign
-        dotnet nuget push .\nuget\*.nupkg -s https://www.myget.org/F/identity/api/v2/package -k ${{ secrets.MYGET }}
+        NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
