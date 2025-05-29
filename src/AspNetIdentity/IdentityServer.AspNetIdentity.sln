@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "migrations", "migrations", "{F233F6A0-612C-49FF-8BAD-FA47AA274FDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer", "migrations\SqlServer\SqlServer.csproj", "{83A50C5E-C181-486C-BBD4-8C1287816170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "host\Host.csproj", "{1BE19506-247B-461B-9644-F20E99C9D69E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.AspNetIdentity", "src\IdentityServer.AspNetIdentity.csproj", "{F4E35EA3-9DFB-48CC-B4C5-1C58751CA902}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83A50C5E-C181-486C-BBD4-8C1287816170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A50C5E-C181-486C-BBD4-8C1287816170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A50C5E-C181-486C-BBD4-8C1287816170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A50C5E-C181-486C-BBD4-8C1287816170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE19506-247B-461B-9644-F20E99C9D69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE19506-247B-461B-9644-F20E99C9D69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE19506-247B-461B-9644-F20E99C9D69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE19506-247B-461B-9644-F20E99C9D69E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4E35EA3-9DFB-48CC-B4C5-1C58751CA902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4E35EA3-9DFB-48CC-B4C5-1C58751CA902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4E35EA3-9DFB-48CC-B4C5-1C58751CA902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4E35EA3-9DFB-48CC-B4C5-1C58751CA902}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83A50C5E-C181-486C-BBD4-8C1287816170} = {F233F6A0-612C-49FF-8BAD-FA47AA274FDD}
+	EndGlobalSection
+EndGlobal

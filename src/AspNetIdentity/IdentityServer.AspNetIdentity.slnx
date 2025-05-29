@@ -1,9 +1,0 @@
-<Solution>
-    <Folder Name="/migrations/">
-        <Project Path="migrations/SqlServer/SqlServer.csproj"/>
-    </Folder>
-    <Folder Name="/src/">
-        <Project Path="host/Host.csproj"/>
-        <Project Path="src/IdentityServer.AspNetIdentity.csproj"/>
-    </Folder>
-</Solution>
