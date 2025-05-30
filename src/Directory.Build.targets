@@ -9,7 +9,7 @@
         <FrameworkVersion>8.0.0</FrameworkVersion>
         <EntityFrameworkVersion>8.0.14</EntityFrameworkVersion>
 
-        <IdentityServerVersion>1.0.0-*</IdentityServerVersion>
+        <IdentityServerVersion>1.0.1</IdentityServerVersion>
 
         <!-- Configure code analysis. -->
         <AnalysisLevel>latest</AnalysisLevel>
@@ -24,7 +24,7 @@
         <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
 
         <MinVerTagPrefix>meniga-</MinVerTagPrefix>
-        <MinVerVersion>1.0.0</MinVerVersion> 
+        <MinVerVersion>1.0.0</MinVerVersion>
     </PropertyGroup>
 
     <ItemGroup>
