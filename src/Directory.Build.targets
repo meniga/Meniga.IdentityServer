@@ -9,7 +9,7 @@
         <FrameworkVersion>8.0.0</FrameworkVersion>
         <EntityFrameworkVersion>8.0.14</EntityFrameworkVersion>
 
-        <IdentityServerVersion>4.1.3-*</IdentityServerVersion>
+        <IdentityServerVersion>1.0.0-*</IdentityServerVersion>
 
         <!-- Configure code analysis. -->
         <AnalysisLevel>latest</AnalysisLevel>
