@@ -35,8 +35,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Meniga.IdentityServer"  Version="4.1.3-*" />
-        <PackageReference Include="Meniga.IdentityServer.EntityFramework.Storage" Version="4.1.3-*" />
+        <PackageReference Include="Meniga.IdentityServer" />
+        <PackageReference Include="Meniga.IdentityServer.EntityFramework.Storage" />
 
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All"/>
     </ItemGroup>
