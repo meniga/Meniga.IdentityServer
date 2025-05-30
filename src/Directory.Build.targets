@@ -22,6 +22,9 @@
         <Features>strict</Features>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+
+        <MinVerTagPrefix>meniga-</MinVerTagPrefix>
+        <MinVerVersion>1.0.0</MinVerVersion> 
     </PropertyGroup>
 
     <ItemGroup>
