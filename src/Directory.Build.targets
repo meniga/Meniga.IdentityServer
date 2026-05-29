@@ -1,13 +1,13 @@
 <Project>
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <LangVersion>12.0</LangVersion>
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
 
-        <FrameworkVersion>8.0.0</FrameworkVersion>
-        <EntityFrameworkVersion>8.0.14</EntityFrameworkVersion>
+        <FrameworkVersion>10.0.0</FrameworkVersion>
+        <EntityFrameworkVersion>10.0.8</EntityFrameworkVersion>
 
         <IdentityServerVersion>1.0.1</IdentityServerVersion>
 
