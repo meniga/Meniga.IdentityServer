@@ -36,7 +36,7 @@
     <ItemGroup>
         <PackageReference Include="Meniga.IdentityServer.Storage" />
 
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="MagicMapper" Version="14.0.1" />
 
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
